@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hören Teil 1 - Test 01</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #0a0a0f;
+            --bg-card: #12121a;
+            --accent-purple: #a855f7;
+            --text-main: #e2e8f0;
+            --text-dim: #94a3b8;
+            --border-color: #26262e;
+            --success: #10b981;
+            --error: #f43f5e;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        nav {
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            background: rgba(17, 17, 24, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .back-btn { color: var(--text-dim); text-decoration: none; margin-right: 20px; }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Audio Player Box */
+        .audio-section {
+            background: linear-gradient(145deg, #1e1e2d, #12121a);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .audio-title { margin-bottom: 15px; font-weight: bold; color: var(--accent-purple); }
+        
+        audio {
+            width: 100%;
+            height: 45px;
+            filter: invert(100%) hue-rotate(180deg) brightness(1.5); /* Làm audio player trông tối hơn phù hợp giao diện */
+        }
+
+        /* Question Cards */
+        .question-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .q-info { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #26262e; padding-bottom: 10px; }
+        .q-num { font-weight: bold; color: var(--accent-purple); }
+
+        .options-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .opt-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            background: #1a1a24;
+            color: var(--text-main);
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .opt-btn:hover { border-color: var(--accent-purple); }
+        .opt-btn.selected { background: var(--accent-purple); color: white; border-color: var(--accent-purple); }
+        .opt-btn.correct { background: var(--success); border-color: var(--success); color: white; }
+        .opt-btn.wrong { background: var(--error); border-color: var(--error); color: white; }
+
+        .submit-area { text-align: center; margin-top: 40px; padding-bottom: 100px; }
+        .btn-finish {
+            background: var(--accent-purple);
+            color: white;
+            padding: 15px 50px;
+            border-radius: 30px;
+            border: none;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .result-text { margin-top: 20px; font-size: 24px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="hoer-teil1-list.html" class="back-btn"><i class="fas fa-arrow-left"></i> Quay lại</a>
+    <div style="font-weight: 700;">Hören Teil 1 - Test 01</div>
+</nav>
+
+<div class="container">
+    <div class="audio-section">
+        <div class="audio-title"><i class="fas fa-headphones-alt"></i> Nghe đoạn hội thoại dưới đây (1 lần duy nhất)</div>
+        <audio controls>
+            <source src="duong-dan-file-nghe.mp3" type="audio/mpeg">
+            Trình duyệt của bạn không hỗ trợ phát âm thanh.
+        </audio>
+    </div>
+
+    <div id="quiz-container">
+        <div class="question-card" id="q1">
+            <div class="q-info">
+                <span class="q-num">Câu 01</span>
+                <span style="font-size: 12px; color: var(--text-dim);">Richtig / Falsch</span>
+            </div>
+            <div class="q-text">Frau Müller möchte einen Termin verschieben.</div>
+            <div class="options-group">
+                <button class="opt-btn" onclick="selectOpt(1, 'Richtig', this)">Richtig</button>
+                <button class="opt-btn" onclick="selectOpt(1, 'Falsch', this)">Falsch</button>
+            </div>
+        </div>
+
+        <div class="question-card" id="q2">
+            <div class="q-info">
+                <span class="q-num">Câu 02</span>
+                <span style="font-size: 12px; color: var(--text-dim);">Richtig / Falsch</span>
+            </div>
+            <div class="q-text">Der Zug nach Berlin hat heute 20 Minuten Verspätung.</div>
+            <div class="options-group">
+                <button class="opt-btn" onclick="selectOpt(2, 'Richtig', this)">Richtig</button>
+                <button class="opt-btn" onclick="selectOpt(2, 'Falsch', this)">Falsch</button>
+            </div>
+        </div>
+        
+        </div>
+
+    <div class="submit-area">
+        <div id="result-display" class="result-text"></div>
+        <button class="btn-finish" id="submitBtn" onclick="checkAnswers()">Nộp bài & Chấm điểm</button>
+    </div>
+</div>
+
+<script>
+    const userAnswers = {};
+    const correctAnswers = {
+        1: "Richtig",
+        2: "Falsch"
+    };
+
+    function selectOpt(qNum, val, btn) {
+        userAnswers[qNum] = val;
+        const parent = btn.parentElement;
+        parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+    }
+
+    function checkAnswers() {
+        if (Object.keys(userAnswers).length < 2) {
+            alert("Vui lòng trả lời hết các câu hỏi!");
+            return;
+        }
+
+        let score = 0;
+        for (let qNum in correctAnswers) {
+            const card = document.getElementById(`q${qNum}`);
+            const buttons = card.querySelectorAll('.opt-btn');
+            const userAns = userAnswers[qNum];
+            const correctAns = correctAnswers[qNum];
+
+            buttons.forEach(btn => {
+                const btnVal = btn.innerText;
+                if (btnVal === correctAns) {
+                    btn.classList.add('correct');
+                }
+                if (btnVal === userAns && userAns !== correctAns) {
+                    btn.classList.add('wrong');
+                }
+            });
+
+            if (userAns === correctAns) score++;
+        }
+
+        document.getElementById('result-display').innerText = `Kết quả: ${score}/${Object.keys(correctAnswers).length}`;
+        document.getElementById('submitBtn').style.display = 'none';
+        
+        // Thêm nút làm lại
+        const restartBtn = document.createElement('button');
+        restartBtn.className = 'btn-finish';
+        restartBtn.style.background = '#333';
+        restartBtn.style.marginTop = '10px';
+        restartBtn.innerText = 'Làm lại bài';
+        restartBtn.onclick = () => location.reload();
+        document.querySelector('.submit-area').appendChild(restartBtn);
+    }
+</script>
+
+</body>
+</html>

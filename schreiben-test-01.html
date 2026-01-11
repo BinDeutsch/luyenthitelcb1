@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schreiben Test 1 - Phản hồi thư Jan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #0d0d12;
+            --bg-card: #16161e;
+            --accent-blue: #2c8fff;
+            --accent-green: #10b981;
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+            --border-color: #2a2a2e;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        nav {
+            padding: 15px 30px;
+            background: #111118;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-btn { color: var(--text-dim); text-decoration: none; font-size: 14px; }
+        .timer { font-size: 18px; color: #f39c12; font-weight: bold; }
+
+        .container {
+            display: grid;
+            grid-template-columns: 450px 1fr;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Cột trái: Đề bài */
+        .task-panel {
+            padding: 30px;
+            border-right: 1px solid var(--border-color);
+            overflow-y: auto;
+            background: #0f0f16;
+        }
+
+        .ai-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-green);
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .letter-box {
+            background: white;
+            color: black;
+            padding: 25px;
+            border-radius: 8px;
+            font-family: 'Georgia', serif;
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            border: 2px solid #f39c12;
+        }
+
+        .leitpunkte {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .leitpunkte h4 { color: var(--accent-blue); margin-top: 0; }
+        .leitpunkte ul { padding-left: 20px; color: var(--text-dim); }
+        .leitpunkte li { margin-bottom: 10px; }
+
+        /* Cột phải: Soạn thảo */
+        .editor-panel {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .word-counter {
+            background: #1f1f29;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: var(--accent-green);
+        }
+
+        textarea {
+            flex: 1;
+            background: #1a1a24;
+            color: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            font-size: 18px;
+            line-height: 1.6;
+            resize: none;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        textarea:focus { border-color: var(--accent-blue); box-shadow: 0 0 15px rgba(44, 143, 255, 0.1); }
+
+        .btn-submit {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-submit:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+            .task-panel { border-right: none; border-bottom: 1px solid var(--border-color); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="schreiben.html" class="back-btn"><i class="fas fa-arrow-left"></i> Quay lại danh sách</a>
+        <div style="font-weight: bold; font-size: 20px;">Giáo viên AI chấm bài</div>
+        <div class="timer" id="clock">30:00</div>
+    </nav>
+
+    <div class="container">
+        <div class="task-panel">
+            <div class="ai-badge"><i class="fas fa-robot"></i> AI đang sẵn sàng chấm điểm</div>
+            
+            <div class="letter-box">
+                <h3 style="text-align: center; margin-top: 0;">15. Jan</h3>
+                <p><strong>Liebe(r).........</strong></p>
+                <p>Ich sende Dir ganz viele Grüße aus Rom! Du weißt ja, wie sehr mir diese Stadt gefällt. Ich bin hier von morgens bis abends nur unterwegs. Diese Museen, Parks Plätze und natürlich das Essen - wunderbar! Gestern Abend war ich übrigens in einem Rockkonzert. Ich fand die Musik ganz toll und die Stimmung war super.</p>
+                <p>Doch leider ist mein Urlaub schon fast vorbei und in drei Tagen muss ich wieder zurück nach Deutschland. Welche Stadt ist eigentlich Deine Lieblingsstadt? Hast du schon Pläne für Deinen nächsten Urlaub? Vielleicht können wir uns ja mal wieder treffen.</p>
+                <p><strong>Herzliche Grüße</strong><br>Jan</p>
+            </div>
+
+            <div class="leitpunkte">
+                <h4>Antworten Sie Jan zu allen 4 Punkten:</h4>
+                <ul>
+                    <li>Ihre Lieblingsstadt</li>
+                    <li>Welche Musik Sie mögen</li>
+                    <li>Ihre Pläne für den nächsten Urlaub</li>
+                    <li>Treffen mit Jan? </li>
+                </ul>
+                <p style="font-size: 12px; color: #666; margin-top: 15px;">* Lưu ý: Viết khoảng 80 từ. Bao gồm lời chào và lời kết thư.</p>
+            </div>
+        </div>
+
+        <div class="editor-panel">
+            <div class="editor-header">
+                <h2 style="margin: 0;">Bài làm của bạn</h2>
+                <div class="word-counter" id="wordCount">0 từ</div>
+            </div>
+            
+            <textarea id="textInput" placeholder="Lieber Jan, ..."></textarea>
+            
+            <button class="btn-submit" onclick="submitToAI()">
+                <i class="fas fa-magic"></i> Gửi bài cho AI nhận xét
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Đếm từ
+        const textInput = document.getElementById('textInput');
+        const wordCount = document.getElementById('wordCount');
+
+        textInput.addEventListener('input', () => {
+            const text = textInput.value.trim();
+            const words = text ? text.split(/\s+/).length : 0;
+            wordCount.innerText = `${words} từ`;
+        });
+
+        // Đồng hồ đếm ngược
+        let time = 30 * 60;
+        setInterval(() => {
+            if (time <= 0) return;
+            time--;
+            let m = Math.floor(time / 60);
+            let s = time % 60;
+            document.getElementById('clock').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+        }, 1000);
+
+        function submitToAI() {
+            const content = textInput.value.trim();
+            if (content.length < 50) {
+                alert("Bài viết còn quá ngắn, bạn cần viết ít nhất khoảng 80 từ!");
+                return;
+            }
+            alert("Bài viết đã được gửi! Giáo viên AI đang phân tích lỗi ngữ pháp và cấu trúc của bạn...");
+        }
+    </script>
+</body>
+</html>

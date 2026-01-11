@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEUTSCHPRO | Sprachbausteine Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #050507;
+            --bg-card: #0f0f14;
+            --primary: #c4a661; 
+            --primary-glow: rgba(196, 166, 97, 0.15);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: #1e1e26;
+            --success: #10b981;
+            --error: #f43f5e;
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            line-height: 1.7;
+        }
+
+        /* Nav & Logo */
+        nav {
+            padding: 10px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5, 5, 7, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .logo-container { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; display: flex; align-items: center; gap: 8px; }
+        .logo span { color: var(--primary); }
+        .tag-badge {
+            background: var(--primary-glow);
+            color: var(--primary);
+            font-size: 8px;
+            font-weight: 800;
+            padding: 1px 8px; border-radius: 4px;
+            text-transform: uppercase; border: 1px solid var(--primary);
+        }
+
+        .header-right {
+            display: flex; justify-content: flex-end;
+            font-size: 13px; color: var(--text-dim);
+        }
+
+        .back-btn { color: var(--text-dim); text-decoration: none; font-size: 14px; }
+        .back-btn:hover { color: var(--primary); }
+
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 25px; }
+
+        /* Lá thư */
+        .letter-paper {
+            background: var(--bg-card); border: 1px solid var(--border);
+            padding: 60px; border-radius: 20px; margin-bottom: 50px;
+            position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        .letter-paper::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); }
+        .letter-header { margin-bottom: 40px; text-align: right; color: var(--text-dim); font-style: italic; }
+        .letter-content { 
+			font-family: 'Inter', sans-serif; /* Phông hiện đại giống giao diện chung */
+			font-size: 18px; 
+			font-weight: 400;
+			color: #d1d5db;
+		}
+
+        .gap {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-width: 40px; height: 32px; background: var(--glass);
+            border: 1px dashed var(--primary); color: var(--primary);
+            font-weight: 700; margin: 0 4px; border-radius: 6px; font-family: 'Inter', sans-serif;
+        }
+
+        /* Câu hỏi */
+        .quiz-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; margin-bottom: 100px; }
+        .question-card { background: var(--bg-card); border-radius: 16px; padding: 24px; border: 1px solid var(--border); }
+        .q-title { color: var(--primary); font-weight: 800; text-transform: uppercase; font-size: 12px; margin-bottom: 18px; display: block; }
+        
+        .opt {
+            background: var(--glass); border: 1px solid var(--border);
+            padding: 12px 18px; border-radius: 10px; cursor: pointer; color: var(--text-dim); margin-bottom: 10px;
+        }
+        .opt:hover { border-color: var(--primary); color: var(--text-main); }
+        .opt.selected { background: var(--primary); color: var(--bg-deep); font-weight: 700; }
+        .opt.correct { background: var(--success) !important; color: white !important; border-color: var(--success); }
+        .opt.wrong { background: var(--error) !important; color: white !important; border-color: var(--error); }
+
+        /* Footer Nav Buttons */
+        .footer-nav { 
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            z-index: 100; display: flex; gap: 15px;
+        }
+
+        .btn-main {
+            padding: 16px 40px; border-radius: 50px; border: none;
+            font-weight: 800; cursor: pointer; text-transform: uppercase;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 10px;
+        }
+
+        .btn-submit { background: var(--primary); color: var(--bg-deep); }
+        .btn-reset { background: #334155; color: white; display: none; } /* Mặc định ẩn nút làm lại */
+
+        @media (max-width: 768px) {
+            nav { padding: 10px 20px; }
+            .header-right { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="lese-teil2-list.html" class="back-btn"><i class="fas fa-chevron-left"></i> TRỞ VỀ</a>
+    <div class="logo-container">
+        <div class="logo">DEUTSCH<span>PRO</span></div>
+        <div class="tag-badge">Teil 2 Sprachbaustein</div>
+    </div>
+    <div class="header-right">
+        <span><i class="fas fa-user-graduate"></i> Học viên Pro</span>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="letter-paper">
+        <div class="letter-header">Berlin, den 10.01.2026</div>
+        <div class="letter-content">
+            <p>Sehr geehrte Frau Müller,</p>
+            <p>
+                ich habe Ihre Anzeige im Internet gelesen và interessiere <span class="gap" id="g21">21</span> sehr für một vị trí thực tập tại công ty của bà. 
+                Momentan besuche ich einen Sprachkurs, <span class="gap" id="g22">22</span> ich mein Deutsch verbessern möchte. 
+                Tôi đã từng làm việc tại quê hương <span class="gap" id="g23">23</span> Verkäufer gearbeitet. 
+                Daher habe ich schon viel Erfahrung im Umgang <span class="gap" id="g24">24</span> Kunden gesammelt. 
+                Ich bin sehr zuverlässig và arbeite gerne <span class="gap" id="g25">25</span> einem Team. 
+                Über eine positive Antwort <span class="gap" id="g26">26</span> ich mich sehr freuen. 
+                Gerne komme ich zu einem persönlichen Gespräch <span class="gap" id="g27">27</span> Ihnen. 
+                Anbei sende ich Ihnen <span class="gap" id="g28">28</span> Lebenslauf. 
+                Falls Sie còn câu hỏi nào <span class="gap" id="g29">29</span>, rufen Sie mich bitte an.
+            </p>
+            <p style="margin-top:40px">Mit <span class="gap" id="g30">30</span> Grüßen,<br>Juan Perez</p>
+        </div>
+    </div>
+
+    <div class="quiz-grid" id="quiz-form"></div>
+
+    <div class="footer-nav">
+        <button class="btn-main btn-submit" id="submit-btn" onclick="gradeQuiz()">
+            <i class="fas fa-paper-plane"></i> HOAN THANH
+        </button>
+        <button class="btn-main btn-reset" id="reset-btn" onclick="resetQuiz()">
+            <i class="fas fa-undo"></i> LAM LAI
+        </button>
+    </div>
+</div>
+
+<script>
+    const data = [
+        { id: 21, options: { a: "mir", b: "mich", c: "dich" }, correct: "b" },
+        { id: 22, options: { a: "weil", b: "denn", c: "dass" }, correct: "a" },
+        { id: 23, options: { a: "als", b: "wie", c: "mit" }, correct: "a" },
+        { id: 24, options: { a: "an", b: "mit", c: "zu" }, correct: "b" },
+        { id: 25, options: { a: "in", b: "an", c: "auf" }, correct: "a" },
+        { id: 26, options: { a: "werde", b: "wurde", c: "würde" }, correct: "c" },
+        { id: 27, options: { a: "bei", b: "zu", c: "nach" }, correct: "b" },
+        { id: 28, options: { a: "meinen", b: "mein", c: "meiner" }, correct: "a" },
+        { id: 29, options: { a: "hast", b: "haben", c: "hätten" }, correct: "b" },
+        { id: 30, options: { a: "freundliche", b: "freundlichen", c: "freundlicher" }, correct: "b" }
+    ];
+
+    let userAnswers = {};
+    let graded = false;
+
+    function initQuiz() {
+        const container = document.getElementById('quiz-form');
+        container.innerHTML = '';
+        data.forEach(q => {
+            container.innerHTML += `
+                <div class="question-card" id="card-${q.id}">
+                    <span class="q-title">Lücke ${q.id}</span>
+                    <div class="options-group">
+                        <div class="opt" onclick="select(this, ${q.id}, 'a')">A. ${q.options.a}</div>
+                        <div class="opt" onclick="select(this, ${q.id}, 'b')">B. ${q.options.b}</div>
+                        <div class="opt" onclick="select(this, ${q.id}, 'c')">C. ${q.options.c}</div>
+                    </div>
+                </div>`;
+        });
+    }
+
+    function select(el, qId, val) {
+        if (graded) return;
+        const card = document.getElementById(`card-${qId}`);
+        card.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+        userAnswers[qId] = val;
+        
+        const gap = document.getElementById(`g${qId}`);
+        gap.innerText = val.toUpperCase();
+        gap.style.background = "rgba(196, 166, 97, 0.1)";
+        gap.style.borderStyle = "solid";
+    }
+
+    function gradeQuiz() {
+        if (Object.keys(userAnswers).length < 10) {
+            alert("Vui lòng hoàn thành đủ 10 câu!");
+            return;
+        }
+        graded = true;
+        let score = 0;
+        data.forEach(q => {
+            const card = document.getElementById(`card-${q.id}`);
+            const opts = card.querySelectorAll('.opt');
+            const userAns = userAnswers[q.id];
+            opts.forEach(opt => {
+                const val = opt.innerText.charAt(0).toLowerCase();
+                if (val === q.correct) opt.classList.add('correct');
+                if (val === userAns && userAns !== q.correct) opt.classList.add('wrong');
+            });
+            if (userAns === q.correct) score++;
+        });
+
+        const submitBtn = document.getElementById('submit-btn');
+        submitBtn.innerHTML = `<i class="fas fa-poll"></i> KET QUA: ${score}/10`;
+        submitBtn.style.background = "#10b981";
+        document.getElementById('reset-btn').style.display = 'flex';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetQuiz() {
+        userAnswers = {};
+        graded = false;
+        
+        // Reset Gaps
+        data.forEach(q => {
+            const gap = document.getElementById(`g${q.id}`);
+            gap.innerText = q.id;
+            gap.style.background = "var(--glass)";
+            gap.style.borderStyle = "dashed";
+        });
+
+        // Reset Buttons
+        const submitBtn = document.getElementById('submit-btn');
+        submitBtn.innerHTML = `<i class="fas fa-paper-plane"></i> HOAN THANH`;
+        submitBtn.style.background = "var(--primary)";
+        document.getElementById('reset-btn').style.display = 'none';
+
+        initQuiz();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    initQuiz();
+</script>
+</body>
+</html>

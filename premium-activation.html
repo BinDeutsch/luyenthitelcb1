@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thanh toán & Kích hoạt</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body { background: #050507; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .pay-card { background: #0f0f15; padding: 40px; border-radius: 20px; text-align: center; width: 100%; max-width: 400px; border: 1px solid rgba(255,255,255,0.05); }
+        .qr-img { width: 200px; background: white; padding: 10px; border-radius: 10px; margin-bottom: 20px; }
+        .note { color: #94a3b8; font-size: 13px; margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; background: #000; border: 1px solid #333; border-radius: 8px; color: white; margin-bottom: 15px; text-align: center; }
+        .btn { background: #2563eb; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; }
+    </style>
+</head>
+<body>
+
+<div class="pay-card">
+    <h3>KÍCH HOẠT THÀNH VIÊN</h3>
+    <img src="LINK_ANH_QR_CUA_BAN" class="qr-img" alt="QR Thanh toán">
+    <p class="note">Sau khi chuyển khoản, hãy liên hệ SĐT: <b>0xxx.xxx.xxx</b> để nhận Mã Thành Viên.</p>
+    
+    <input type="text" id="mCode" placeholder="Nhập mã thành viên tại đây">
+    <button class="btn" onclick="verifyCode()">Kích hoạt tài khoản</button>
+</div>
+
+<script>
+    const firebaseConfig = { /* DÁN CONFIG CỦA BẠN */ };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const username = urlParams.get('u');
+
+    async function verifyCode() {
+        const code = document.getElementById('mCode').value.trim();
+        if(!code) return Swal.fire('Lỗi', 'Vui lòng nhập mã', 'error');
+
+        Swal.showLoading();
+        const ip = await fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => d.ip);
+
+        try {
+            const codeRef = db.collection("valid_codes").doc(code);
+            const codeDoc = await codeRef.get();
+
+            if(!codeDoc.exists || codeDoc.data().used === true) {
+                throw new Error("Mã thành viên không hợp lệ hoặc đã được sử dụng!");
+            }
+
+            // Cập nhật tài khoản người dùng
+            await db.collection("users").doc(username).update({
+                isActivated: true,
+                deviceIP: ip,
+                memberCode: code
+            });
+
+            // Đánh dấu mã đã dùng
+            await codeRef.update({ used: true });
+
+            Swal.fire('Thành công', 'Tài khoản đã được kích hoạt trên thiết bị này!', 'success')
+                .then(() => window.location.href = "auth.html");
+
+        } catch (e) { Swal.fire('Thất bại', e.message, 'error'); }
+    }
+</script>
+</body>
+</html>

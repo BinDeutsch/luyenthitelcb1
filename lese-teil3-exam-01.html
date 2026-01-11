@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEUTSCHPRO | Lesen Teil 3</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #050507;
+            --bg-card: #0f0f14;
+            --primary: #c4a661; 
+            --accent-orange: #ff7f50; /* Màu Cam bạn chọn */
+            --accent-purple: #a29bfe; /* Màu Tím bạn chọn */
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: #1e1e26;
+            --success: #10b981;
+            --error: #f43f5e;
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Nav & Logo */
+        nav {
+            padding: 10px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5, 5, 7, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .logo-container { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; display: flex; align-items: center; gap: 8px; }
+        .logo span { color: var(--primary); }
+        .tag-badge {
+            background: rgba(196, 166, 97, 0.1); color: var(--primary);
+            font-size: 8px; font-weight: 800; padding: 1px 8px; border-radius: 4px;
+            text-transform: uppercase; border: 1px solid var(--primary);
+        }
+
+        .header-right { font-size: 13px; color: var(--text-dim); }
+        .header-right i { color: var(--accent-purple); } /* Sử dụng màu tím cho icon */
+
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+
+        /* Layout 2 cột */
+        .lesen-layout {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        /* Cột Tình huống (Sticky) */
+        .situation-sidebar {
+            position: sticky;
+            top: 100px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            max-height: calc(100vh - 150px);
+            overflow-y: auto;
+        }
+
+        .situation-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent-purple);
+        }
+
+        .situation-card span {
+            color: var(--accent-purple);
+            font-weight: 800;
+            font-size: 12px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .situation-card p { margin: 0 0 15px 0; font-size: 14px; color: var(--text-main); }
+
+        .answer-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text-dim);
+        }
+
+        select {
+            background: var(--bg-deep);
+            color: var(--primary);
+            border: 1px solid var(--border);
+            padding: 5px 12px;
+            border-radius: 6px;
+            outline: none;
+            font-weight: 700;
+        }
+
+        /* Cột Quảng cáo */
+        .ads-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .ad-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .ad-item:hover { border-color: var(--accent-orange); }
+
+        .ad-label {
+            position: absolute;
+            top: -12px; left: 20px;
+            background: var(--accent-orange);
+            color: white;
+            width: 35px; height: 35px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 8px; font-weight: 800;
+            box-shadow: 0 5px 15px rgba(255, 127, 80, 0.3);
+        }
+
+        .ad-title {
+            color: var(--primary);
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+        }
+
+        .ad-text { color: var(--text-dim); font-size: 15px; line-height: 1.8; }
+        
+        /* Footer Buttons */
+        .footer-nav {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 15px; z-index: 1000;
+        }
+
+        .btn {
+            padding: 15px 35px; border-radius: 50px; border: none;
+            font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+        .btn-submit { background: var(--primary); color: var(--bg-deep); }
+        .btn-reset { background: #334155; color: white; display: none; }
+
+        .correct-ans { color: var(--success) !important; font-weight: 800; }
+        .wrong-ans { color: var(--error) !important; font-weight: 800; }
+
+        @media (max-width: 900px) {
+            .lesen-layout { grid-template-columns: 1fr; }
+            .situation-sidebar { position: relative; top: 0; max-height: none; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="lese-teil3-list.html" class="back-btn"><i class="fas fa-chevron-left"></i> TRỞ VỀ</a>
+    <div class="logo-container">
+        <div class="logo">LESEN<span>PRO</span></div>
+        <div class="tag-badge">Teil 3 Anzeigen</div>
+    </div>
+    <div class="header-right">
+        <span><i class="fas fa-user-graduate"></i> Học viên Pro</span>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="lesen-layout">
+        
+        <div class="situation-sidebar" id="situation-list">
+            <h3 style="color: var(--primary); margin-top: 0; font-size: 16px;">
+                <i class="fas fa-tasks" style="color: var(--accent-purple);"></i> SITUATIONEN
+            </h3>
+            <div class="situation-card">
+                <span>TÌNH HUỐNG 11</span>
+                <p>Bạn muốn học tiếng Đức vào cuối tuần vì bận việc vào ngày thường.</p>
+                <div class="answer-area">
+                    Chọn quảng cáo: 
+                    <select class="ans-select" data-id="11">
+                        <option value="">--</option>
+                        <option value="a">A</option>
+                        <option value="b">B</option>
+                        <option value="c">C</option>
+                        <option value="x">X (Không có)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="situation-card">
+                <span>TÌNH HUỐNG 12</span>
+                <p>Bạn tìm một khóa học tiếng Đức cấp tốc để chuẩn bị đi du học ngay.</p>
+                <div class="answer-area">
+                    Chọn quảng cáo: 
+                    <select class="ans-select" data-id="12">
+                        <option value="">--</option>
+                        <option value="a">A</option>
+                        <option value="b">B</option>
+                        <option value="c">C</option>
+                        <option value="x">X (Không có)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="ads-container">
+            <div class="ad-item">
+                <div class="ad-label">A</div>
+                <h4 class="ad-title">Deutsch-Intensivkurs am Vormittag</h4>
+                <div class="ad-text">
+                    Học từ thứ Hai đến thứ Sáu, 08:30 - 12:00. Khóa học cấp tốc dành cho người muốn đạt trình độ B2 trong thời gian ngắn nhất. Thi ngay tại trung tâm.
+                </div>
+            </div>
+            <div class="ad-item">
+                <div class="ad-label">B</div>
+                <h4 class="ad-title">Sprachen am Wochenende</h4>
+                <div class="ad-text">
+                    Bạn không có thời gian trong tuần? Hãy đến với chúng tôi vào sáng thứ Bảy và Chủ nhật. Các lớp từ A1 đến C1 luôn khai giảng hàng tháng.
+                </div>
+            </div>
+            <div class="ad-item">
+                <div class="ad-label">C</div>
+                <h4 class="ad-title">Online Deutsch lernen</h4>
+                <div class="ad-text">
+                    Khóa học qua Zoom linh hoạt, học mọi lúc mọi nơi. Tài liệu miễn phí.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-nav">
+        <button class="btn btn-submit" id="submit-btn" onclick="checkAnswers()">
+            <i class="fas fa-check-circle"></i> Kiểm tra đáp án
+        </button>
+        <button class="btn btn-reset" id="reset-btn" onclick="resetLesen()">
+            <i class="fas fa-undo"></i> Làm lại bài
+        </button>
+    </div>
+</div>
+
+<script>
+    // Đáp án mẫu
+    const correctAnswers = {
+        "11": "b",
+        "12": "a"
+    };
+
+    function checkAnswers() {
+        let selects = document.querySelectorAll('.ans-select');
+        let allSelected = true;
+        let score = 0;
+
+        selects.forEach(sel => {
+            if (sel.value === "") allSelected = false;
+        });
+
+        if (!allSelected) {
+            alert("Vui lòng chọn đáp án cho tất cả các tình huống!");
+            return;
+        }
+
+        selects.forEach(sel => {
+            let id = sel.getAttribute('data-id');
+            let parent = sel.closest('.situation-card');
+            
+            if (sel.value === correctAnswers[id]) {
+                sel.classList.add('correct-ans');
+                score++;
+            } else {
+                sel.classList.add('wrong-ans');
+                // Hiển thị gợi ý đáp án đúng
+                let hint = document.createElement('small');
+                hint.className = 'correct-ans';
+                hint.style.display = 'block';
+                hint.innerText = `Đúng là: ${correctAnswers[id].toUpperCase()}`;
+                parent.appendChild(hint);
+            }
+            sel.disabled = true;
+        });
+
+        document.getElementById('submit-btn').innerHTML = `<i class="fas fa-poll"></i> Kết quả: ${score}/${Object.keys(correctAnswers).length}`;
+        document.getElementById('submit-btn').style.background = "#10b981";
+        document.getElementById('reset-btn').style.display = 'flex';
+    }
+
+    function resetLesen() {
+        location.reload(); // Cách nhanh nhất để reset toàn bộ trạng thái
+    }
+</script>
+
+</body>
+</html>

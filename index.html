@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Telc B1 AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        const myDev = localStorage.getItem('my_dev_id');
+        if (!myDev) {
+            alert("Thiết bị của bạn chưa được kích hoạt!");
+            window.location.replace("anmelden.html"); // Chú ý: Đổi tên đúng file đăng ký của bạn
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg-body: #0a0a0c;
+            --bg-card: #151518;
+            --accent-pink: #ff007a;
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+            --border-color: #2a2a2e;
+        }
+
+        body {
+            margin: 0; font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body); color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        nav {
+            padding: 20px 50px; display: flex;
+            justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .user-info { display: flex; align-items: center; gap: 15px; }
+        .logout-btn { 
+            color: var(--text-dim); text-decoration: none; font-size: 14px; 
+            padding: 5px 15px; border: 1px solid var(--border-color); border-radius: 8px;
+        }
+
+        .container { max-width: 1000px; margin: 50px auto; padding: 0 20px; }
+        .welcome-section { margin-bottom: 40px; }
+        .welcome-section h1 { font-size: 28px; margin-bottom: 10px; }
+        .welcome-section p { color: var(--text-dim); font-size: 15px; }
+
+        .skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
+        
+        .skill-card {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 24px; padding: 40px 30px; text-align: center;
+            transition: all 0.3s ease; cursor: pointer; text-decoration: none; color: white;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-8px); border-color: var(--accent-pink);
+            box-shadow: 0 10px 30px rgba(255, 0, 122, 0.1);
+        }
+
+        .skill-card i { font-size: 40px; margin-bottom: 20px; display: block; }
+        .skill-card h3 { font-size: 20px; margin-bottom: 10px; color: #fff; }
+        .skill-card p { color: var(--text-dim); font-size: 14px; opacity: 0.8; }
+
+        .lese i { color: #f39c12; }
+        .hoer i { color: #ff007a; }
+        .schreib i { color: #3498db; }
+        .sprech i { color: #2ecc71; }
+		.gramm i { color: #ff7f50; }
+		.worts i { color: #a29bfe; }
+		
+
+        @media (max-width: 600px) {
+            .skill-grid { grid-template-columns: 1fr; }
+            nav { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div style="font-weight: 800; font-size: 20px;">TELC<span style="color:var(--accent-pink)">B1</span> AI</div>
+        <div class="user-info">
+            <span id="user-display" style="font-size: 14px; color: var(--text-dim);">Học viên</span>
+            <a href="anmelden.html" class="logout-btn" onclick="logout()">Đăng xuất</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="welcome-section">
+            <h1>Chào mừng bạn quay trở lại!</h1>
+            <p>Chọn một kỹ năng để bắt đầu luyện tập ngay hôm nay.</p>
+        </div>
+
+        <div class="skill-grid">
+            <a href="leseverstehen.html" class="skill-card lese">
+                <i class="fas fa-book-reader"></i>
+                <h3>Leseverstehen - B1</h3>
+                <p>Đọc hiểu văn bản & Từ vựng</p>
+            </a>
+            <a href="hoerverstehen.html" class="skill-card hoer">
+                <i class="fas fa-headphones-alt"></i>
+                <h3>Hörverstehen - B1</h3>
+                <p>Nghe hiểu hội thoại thực tế</p>
+            </a>
+            <a href="schreiben.html" class="skill-card schreib">
+                <i class="fas fa-pen-fancy"></i>
+                <h3>Schreiben - B1</h3>
+                <p>Viết thư & Phản hồi cùng AI</p>
+            </a>
+            <a href="sprechen.html" class="skill-card sprech">
+                <i class="fas fa-microphone-alt"></i>
+                <h3>Sprechen - B1</h3>
+                <p>Luyện nói trực tiếp với AI</p>
+            </a>
+			<a href="sprechen.html" class="skill-card gramm">
+                <i class="fas fa-book"></i>
+                <h3>Grammtik</h3>
+                <p>Học và Củng cố ngữ pháp của bạn từ A1 - B1</p>
+            </a>
+			<a href="sprechen.html" class="skill-card worts">
+                <i class="fas fa-spell-check"></i>
+                <h3>Wortschatz</h3>
+                <p>Mở rộng vốn từ vựng tiếng Đức</p>
+            </a>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBUPyMLemOPc2PxcUEL7idiWexFZvVVsjs",
+            authDomain: "telc-b1-ai.firebaseapp.com",
+            projectId: "telc-b1-ai",
+            storageBucket: "telc-b1-ai.firebasestorage.app",
+            messagingSenderId: "992197424488",
+            appId: "1:992197424488:web:d02815a8c95ee27ae0d2dd"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // 1. Kiểm tra mã máy và hiển thị thông tin người dùng từ Firestore
+        async function checkAccess() {
+            const myDev = localStorage.getItem('my_dev_id');
+            
+            try {
+                // Tìm tài khoản khớp với mã máy này
+                const snap = await db.collection('member').where('deviceId', '==', myDev).get();
+                
+                if (!snap.empty) {
+                    const userData = snap.docs[0].data();
+                    document.getElementById('user-display').innerText = "Học viên: " + userData.username;
+                } else {
+                    // Nếu có mã máy nhưng không tìm thấy trong Database (ví dụ bạn xóa trên Firebase)
+                    localStorage.clear();
+                    window.location.replace("anmelden.html");
+                }
+            } catch (e) {
+                console.error("Lỗi kiểm tra quyền:", e);
+            }
+        }
+
+        function logout() {
+            if(confirm("Bạn có chắc chắn muốn đăng xuất? Mã máy sẽ bị xóa.")) {
+                localStorage.clear(); // Xóa sạch dấu vết mã máy
+                window.location.replace("anmelden.html"); // Về trang đăng ký
+            }
+        }
+
+        checkAccess();
+    </script>
+</body>
+</html>

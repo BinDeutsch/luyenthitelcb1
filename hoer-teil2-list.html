@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hörverstehen Teil 2 - Test List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #0d0d12;
+            --bg-card: #16161e;
+            --accent-pink: #ff007a;
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+            --border-color: #2a2a2e;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        nav {
+            padding: 15px 40px;
+            display: flex;
+            align-items: center;
+            background: #111118;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .back-btn {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 20px;
+            transition: 0.3s;
+        }
+        .back-btn:hover { color: white; }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .header-box {
+            margin-bottom: 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .header-box h1 { font-size: 24px; margin: 0; color: var(--accent-pink); }
+
+        /* List Styles */
+        .test-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .test-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 22px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .test-item:hover {
+            border-color: var(--accent-pink);
+            background: #1c1c26;
+            transform: translateX(8px);
+            box-shadow: 0 5px 20px rgba(255, 0, 122, 0.15);
+        }
+
+        .test-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .test-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 0, 122, 0.1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-pink);
+            font-size: 20px;
+        }
+
+        .test-info h3 { font-size: 16px; margin: 0 0 4px 0; }
+        .test-info p { font-size: 13px; color: var(--text-dim); margin: 0; }
+
+        .test-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .badge-detail {
+            font-size: 11px;
+            background: #25252e;
+            padding: 4px 10px;
+            border-radius: 8px;
+            color: #ffb8d9;
+            border: 1px solid rgba(255, 0, 122, 0.2);
+        }
+
+        .btn-play {
+            width: 38px;
+            height: 38px;
+            background: var(--accent-pink);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="hoerverstehen.html" class="back-btn"><i class="fas fa-arrow-left"></i> Quay lại</a>
+        <div style="font-weight: 700;">Hörverstehen Teil 2 (Phóng sự/Phỏng vấn)</div>
+    </nav>
+
+    <div class="container">
+        <div class="header-box">
+            <div>
+                <h1>Nghe hiểu chi tiết</h1>
+                <p style="color: var(--text-dim); margin-top: 8px; font-size: 14px;">Nghe bài phỏng vấn dài và chọn đáp án trắc nghiệm a, b, c.</p>
+            </div>
+            <div style="color: var(--text-dim); font-size: 13px;">Đã học: 0/5 bài</div>
+        </div>
+
+        <div class="test-list">
+            <a href="hoeren-teil2-test-01.html" class="test-item">
+                <div class="test-left">
+                    <div class="test-icon"><i class="fas fa-microphone"></i></div>
+                    <div class="test-info">
+                        <h3>Đề 01: Phỏng vấn về nghề nghiệp mới</h3>
+                        <p>10 câu hỏi • Trắc nghiệm a,b,c</p>
+                    </div>
+                </div>
+                <div class="test-right">
+                    <span class="badge-detail">12:30</span>
+                    <div class="btn-play"><i class="fas fa-play"></i></div>
+                </div>
+            </a>
+
+            <a href="#" class="test-item">
+                <div class="test-left">
+                    <div class="test-icon"><i class="fas fa-user-graduate"></i></div>
+                    <div class="test-info">
+                        <h3>Đề 02: Cuộc sống sinh viên tại Đức</h3>
+                        <p>10 câu hỏi • Trắc nghiệm a,b,c</p>
+                    </div>
+                </div>
+                <div class="test-right">
+                    <span class="badge-detail">10:15</span>
+                    <div class="btn-play"><i class="fas fa-play"></i></div>
+                </div>
+            </a>
+
+            <a href="#" class="test-item">
+                <div class="test-left">
+                    <div class="test-icon"><i class="fas fa-leaf"></i></div>
+                    <div class="test-info">
+                        <h3>Đề 03: Bảo vệ môi trường trong đô thị</h3>
+                        <p>10 câu hỏi • Trắc nghiệm a,b,c</p>
+                    </div>
+                </div>
+                <div class="test-right">
+                    <span class="badge-detail">11:50</span>
+                    <div class="btn-play"><i class="fas fa-play"></i></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

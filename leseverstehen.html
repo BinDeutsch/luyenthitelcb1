@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leseverstehen - Telc B1 AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #0a0a0c;
+            --bg-card: #151518;
+            --accent-orange: #f39c12;
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+            --border-color: #2a2a2e;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        /* Header Navigation */
+        nav {
+            padding: 15px 40px;
+            display: flex;
+            align-items: center;
+            background: #111118;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .back-btn {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 14px;
+            margin-right: 20px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover { color: white; }
+
+        .nav-title { font-weight: 700; font-size: 18px; }
+
+        /* Main Content */
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .page-header { margin-bottom: 30px; }
+        .page-header h1 { font-size: 28px; color: var(--accent-orange); }
+
+        /* Grid for 3 Teile */
+        .teil-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .teil-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .teil-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-orange);
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.1);
+        }
+
+        .teil-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(243, 156, 18, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .teil-icon i { color: var(--accent-orange); font-size: 22px; }
+
+        .teil-card h3 { font-size: 20px; margin: 0 0 10px 0; }
+        .teil-card p { color: var(--text-dim); font-size: 14px; line-height: 1.5; margin-bottom: 20px; }
+
+        .btn-start {
+            background: #1f1f29;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+            border: 1px solid var(--border-color);
+            transition: 0.3s;
+        }
+
+        .teil-card:hover .btn-start {
+            background: var(--accent-orange);
+            border-color: var(--accent-orange);
+        }
+
+        @media (max-width: 900px) {
+            .teil-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Quay lại</a>
+        <div class="nav-title">Kỹ năng Đọc hiểu (Leseverstehen)</div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Luyện tập theo từng phần</h1>
+            <p>Chọn một phần thi cụ thể để bắt đầu luyện tập với AI.</p>
+        </div>
+
+        <div class="teil-grid">
+            <a href="lese-test-list.html" class="teil-card">
+                <div>
+                    <div class="teil-icon"><i class="fas fa-heading"></i></div>
+                    <h3>Teil 1</h3>
+                    <p>Nối tiêu đề (Überschriften) phù hợp với 5 đoạn văn bản ngắn.</p>
+                </div>
+                <div class="btn-start">Luyện tập ngay</div>
+            </a>
+
+            <a href="lese-teil2-list.html" class="teil-card">
+                <div>
+                    <div class="teil-icon"><i class="fas fa-file-alt"></i></div>
+                    <h3>Teil 2</h3>
+                    <p>Đọc hiểu và điền từ còn thiếu vào đoạn Text dạng Sprachbaustein .</p>
+                </div>
+                <div class="btn-start">Luyện tập ngay</div>
+            </a>
+
+            <a href="lese-teil3-list.html" class="teil-card">
+                <div>
+                    <div class="teil-icon"><i class="fas fa-ad"></i></div>
+                    <h3>Teil 3</h3>
+                    <p>Đọc quảng cáo (Anzeigen) và chọn thông tin phù hợp với tình huống.</p>
+                </div>
+                <div class="btn-start">Luyện tập ngay</div>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

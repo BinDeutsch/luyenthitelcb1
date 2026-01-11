@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schreiben List - 34 Đề</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #0d0d12;
+            --bg-card: #16161e;
+            --accent-blue: #2c8fff;
+            --accent-green: #10b981;
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+            --border-color: #2a2a2e;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            padding: 20px;
+        }
+
+        header { max-width: 1200px; margin: 0 auto 40px; padding: 0 15px; }
+        
+        h1 { color: var(--accent-blue); font-size: 28px; }
+
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Card style gọn gàng */
+        .task-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .task-card:hover { border-color: var(--accent-blue); transform: translateY(-3px); }
+
+        .ai-status {
+            color: var(--accent-green);
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .task-card h2 { font-size: 18px; margin: 0 0 10px 0; color: #fff; }
+        .task-card p { color: var(--text-dim); font-size: 13.5px; line-height: 1.5; margin-bottom: 20px; }
+
+        .btn-start {
+            background: #1f1f29;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .btn-start:hover { background: var(--accent-blue); }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Giáo viên AI chấm bài</h1>
+    <p style="color: var(--text-dim);">Chọn một đề bài để bắt đầu luyện viết (Tổng số: 34 đề)</p>
+</header>
+
+<div class="task-grid">
+    <div class="task-card">
+        <div>
+            <div class="ai-status"><i class="fas fa-robot"></i> AI SẴN SÀNG</div>
+            <h2>01. Thư phản hồi: Du lịch Rom</h2>
+            <p>Viết thư trả lời Jan về chuyến đi Rom, kể về thành phố bạn thích và âm nhạc yêu thích.</p>
+        </div>
+        <a href="schreiben-test-01.html" class="btn-start">Bắt đầu viết</a>
+    </div>
+
+    <div class="task-card">
+        <div>
+            <div class="ai-status"><i class="fas fa-robot"></i> AI SẴN SÀNG</div>
+            <h2>02. Phàn nàn (Beschwerde)</h2>
+            <p>Viết thư phàn nàn về một món hàng online bị hỏng và yêu cầu hoàn tiền.</p>
+        </div>
+        <a href="schreiben-test-02.html" class="btn-start">Bắt đầu viết</a>
+    </div>
+
+    <div class="task-card">
+        <div>
+            <div class="ai-status"><i class="fas fa-robot"></i> AI SẴN SÀNG</div>
+            <h2>03. Xin lỗi (Entschuldigung)</h2>
+            <p>Bạn không thể đi làm/đi học vì bị ốm. Viết thư xin phép gửi sếp hoặc giáo viên.</p>
+        </div>
+        <a href="schreiben-test-03.html" class="btn-start">Bắt đầu viết</a>
+    </div>
+
+    <div class="task-card">
+        <div>
+            <div class="ai-status"><i class="fas fa-robot"></i> AI SẴN SÀNG</div>
+            <h2>04. Lời mời (Einladung)</h2>
+            <p>Mời bạn bè đến dự tiệc tân gia (Einweihungsparty) tại căn hộ mới của bạn.</p>
+        </div>
+        <a href="schreiben-test-04.html" class="btn-start">Bắt đầu viết</a>
+    </div>
+
+    <div class="task-card">
+        <div>
+            <div class="ai-status"><i class="fas fa-robot"></i> AI SẴN SÀNG</div>
+            <h2>05. Hỏi thông tin (Information)</h2>
+            <p>Viết thư hỏi trường ngôn ngữ về thời gian khai giảng và học phí khóa B1.</p>
+        </div>
+        <a href="schreiben-test-05.html" class="btn-start">Bắt đầu viết</a>
+    </div>
+</div>
+
+</body>
+</html>

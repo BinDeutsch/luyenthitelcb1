@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hören Teil 2 - Test 01</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #0a0a0f;
+            --bg-card: #12121a;
+            --accent-pink: #ec4899;
+            --text-main: #e2e8f0;
+            --text-dim: #94a3b8;
+            --border-color: #26262e;
+            --success: #10b981;
+            --error: #f43f5e;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        nav {
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            background: rgba(17, 17, 24, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .back-btn { color: var(--text-dim); text-decoration: none; margin-right: 20px; font-size: 14px; }
+
+        .container {
+            max-width: 850px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Audio Player Box */
+        .audio-section {
+            background: linear-gradient(145deg, #251a2e, #12121a);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        audio {
+            width: 100%;
+            height: 45px;
+            filter: invert(100%) hue-rotate(270deg) brightness(1.2);
+            margin-top: 15px;
+        }
+
+        /* Question Cards */
+        .question-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+        }
+
+        .q-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .q-num { background: var(--accent-pink); color: white; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 13px; }
+        .q-text { font-size: 17px; font-weight: 600; }
+
+        /* Options a, b, c */
+        .options-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .opt-btn {
+            background: #1a1a24;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 15px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 15px;
+            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .opt-btn span:first-child { font-weight: bold; color: var(--accent-pink); }
+
+        .opt-btn:hover { border-color: var(--accent-pink); background: #22222e; }
+        .opt-btn.selected { background: var(--accent-pink); border-color: var(--accent-pink); }
+        .opt-btn.selected span { color: white !important; }
+
+        /* Chấm điểm */
+        .opt-btn.correct { background: var(--success); border-color: var(--success); }
+        .opt-btn.wrong { background: var(--error); border-color: var(--error); }
+
+        .footer-action { text-align: center; padding: 40px 0 100px; }
+        .btn-submit {
+            background: var(--accent-pink);
+            color: white;
+            padding: 16px 60px;
+            border-radius: 50px;
+            border: none;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            .options-list { grid-template-columns: 1fr; }
+            .opt-btn { flex-direction: row; padding: 15px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="hoer-teil2-list.html" class="back-btn"><i class="fas fa-arrow-left"></i> Quay lại</a>
+    <div style="font-weight: 700;">Hören Teil 2 - Test 01</div>
+</nav>
+
+<div class="container">
+    <div class="audio-section">
+        <div style="color: var(--accent-pink); font-weight: bold;"><i class="fas fa-bullhorn"></i> Nghe các thông báo và chọn đáp án đúng (a, b hoặc c)</div>
+        <audio controls>
+            <source src="hoeren-teil2-audio.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <div id="quiz-form">
+        <div class="question-card" id="card-6">
+            <div class="q-header">
+                <span class="q-num">06</span>
+                <span class="q-text">Wo findet die Veranstaltung statt?</span>
+            </div>
+            <div class="options-list">
+                <button class="opt-btn" onclick="select(6, 'a', this)">
+                    <span>a)</span> <span>Im Stadtpark</span>
+                </button>
+                <button class="opt-btn" onclick="select(6, 'b', this)">
+                    <span>b)</span> <span>In der Turnhalle</span>
+                </button>
+                <button class="opt-btn" onclick="select(6, 'c', this)">
+                    <span>c)</span> <span>Im Rathaus</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="question-card" id="card-7">
+            <div class="q-header">
+                <span class="q-num">07</span>
+                <span class="q-text">Wann beginnt der nächste Kurs?</span>
+            </div>
+            <div class="options-list">
+                <button class="opt-btn" onclick="select(7, 'a', this)">
+                    <span>a)</span> <span>Nächste Woche</span>
+                </button>
+                <button class="opt-btn" onclick="select(7, 'b', this)">
+                    <span>b)</span> <span>Am Montag</span>
+                </button>
+                <button class="opt-btn" onclick="select(7, 'c', this)">
+                    <span>c)</span> <span>Im nächsten Monat</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-action">
+        <div id="result" style="margin-bottom: 20px; font-size: 20px; font-weight: bold;"></div>
+        <button class="btn-submit" id="submitBtn" onclick="grade()">Nộp bài thi</button>
+    </div>
+</div>
+
+<script>
+    const userAnswers = {};
+    const correctAnswers = { 6: 'b', 7: 'a' }; // Đáp án mẫu
+
+    function select(qId, val, btn) {
+        userAnswers[qId] = val;
+        const parent = btn.parentElement;
+        parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+    }
+
+    function grade() {
+        let score = 0;
+        let total = Object.keys(correctAnswers).length;
+
+        if (Object.keys(userAnswers).length < total) {
+            alert("Vui lòng hoàn thành các câu hỏi!");
+            return;
+        }
+
+        for (let qId in correctAnswers) {
+            const card = document.getElementById(`card-${qId}`);
+            const buttons = card.querySelectorAll('.opt-btn');
+            const userAns = userAnswers[qId];
+            const correctAns = correctAnswers[qId];
+
+            buttons.forEach(btn => {
+                const val = btn.querySelector('span:first-child').innerText.replace(')', '').toLowerCase();
+                if (val === correctAns) btn.classList.add('correct');
+                if (val === userAns && userAns !== correctAns) btn.classList.add('wrong');
+            });
+
+            if (userAns === correctAns) score++;
+        }
+
+        document.getElementById('result').innerText = `Chính xác: ${score}/${total}`;
+        document.getElementById('submitBtn').style.display = 'none';
+        
+        const retry = document.createElement('button');
+        retry.className = 'btn-submit';
+        retry.style.background = '#333';
+        retry.innerText = "Làm lại bài";
+        retry.onclick = () => location.reload();
+        document.querySelector('.footer-action').appendChild(retry);
+    }
+</script>
+
+</body>
+</html>

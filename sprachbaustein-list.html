@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách đề | Telc B1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background:#f5f7fb;
+            margin:0;
+        }
+        header {
+            background:#1e40af;
+            color:white;
+            padding:16px 30px;
+        }
+        .box {
+            max-width:800px;
+            margin:30px auto;
+            background:white;
+            padding:25px;
+            border-radius:12px;
+        }
+        .test {
+            padding:15px;
+            border:1px solid #ddd;
+            border-radius:8px;
+            margin-bottom:12px;
+            cursor:pointer;
+        }
+        .test:hover {
+            background:#eef2ff;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h2>Sprachbausteine – Telc B1</h2>
+</header>
+
+<div class="box" id="testList"></div>
+
+<script>
+    const tests = [
+        { id: 1, title: "Sprachbausteine – Test 1" },
+        { id: 2, title: "Sprachbausteine – Test 2" },
+        { id: 3, title: "Sprachbausteine – Test 3" }
+    ];
+
+    const list = document.getElementById("testList");
+
+    tests.forEach(t => {
+        const div = document.createElement("div");
+        div.className = "test";
+        div.innerText = t.title;
+        div.onclick = () => {
+            window.location.href = `sprachbaustein.html?test=${t.id}`;
+        };
+        list.appendChild(div);
+    });
+</script>
+
+</body>
+</html>

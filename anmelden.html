@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bin Deutsch - Luyện Thi Telc B1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+	    <style>
+        :root {
+            --bg: #050505;
+            --card: #111111;
+            --input: #1a1a1a;
+            --blue: #2563eb;
+            --green: #10b981;
+            --text: #ffffff;
+            --border: #222222;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+        }
+
+        .app-container {
+            background-color: var(--card);
+            width: 950px; height: 580px;
+            border-radius: 20px; display: flex;
+            border: 1px solid var(--border); overflow: hidden;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+        }
+
+        .info-panel {
+            flex: 1; padding: 60px;
+            display: flex; flex-direction: column; justify-content: center;
+            border-right: 1px solid var(--border);
+            background: radial-gradient(circle at top left, #1a1a1a, #111111);
+        }
+
+        .badge { color: var(--green); font-size: 13px; font-weight: 700; margin-bottom: 20px; }
+        .info-panel h1 { font-size: 38px; line-height: 1.1; margin-bottom: 20px; }
+        .info-panel p { color: #888; font-size: 16px; }
+
+        .form-panel {
+            flex: 1; padding: 50px;
+            display: flex; flex-direction: column; justify-content: center;
+            background-color: #0c0c0c;
+        }
+
+        .hidden { display: none !important; }
+
+        input {
+            width: 100%; padding: 15px; margin-bottom: 15px;
+            background-color: var(--input); border: 1px solid var(--border);
+            border-radius: 12px; color: white; outline: none;
+        }
+        input:focus { border-color: var(--blue); }
+
+        .btn {
+            width: 100%; padding: 16px; border: none; border-radius: 12px;
+            font-weight: 700; cursor: pointer; transition: 0.3s;
+        }
+        .btn-blue { background-color: var(--blue); color: white; }
+        .btn-green { background-color: var(--green); color: black; margin-top: 10px; }
+
+        .qr-display { background: white; padding: 10px; border-radius: 16px; width: 160px; margin: 0 auto 15px; }
+        .qr-display img { width: 100%; display: block; }
+        .bill-box { background: #151515; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #222; font-size: 14px; }
+        .bill-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .bill-row b { color: var(--green); }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="info-panel">
+        <div id="left-badge" class="badge">⚡ ĐANG CHỜ ĐĂNG KÝ</div>
+        <h1>Luyện thi Telc B1<br>Chuẩn 100% Thực Tế</h1>
+        <p>Hệ thống thông minh vận hành bởi Bin Deutsch.</p>
+        <p style="margin-top: 20px; font-size: 12px; color: #444;">© 2026 Bin Deutsch System</p>
+    </div>
+
+    <div class="form-panel">
+        <div id="ui-register">
+            <h2 style="margin-bottom: 30px; text-align: center;">Tạo tài khoản mới</h2>
+            <input type="text" id="u" placeholder="Tên đăng nhập">
+            <input type="password" id="p" placeholder="Mật khẩu">
+            <button class="btn btn-blue" onclick="actionRegister()">Đăng ký tài khoản</button>
+        </div>
+
+        <div id="ui-payment" class="hidden">
+            <p style="text-align: center; font-size: 13px; margin-bottom: 10px; color: #888;">Quét mã thanh toán 149.000đ</p>
+            <div class="qr-display">
+                <img id="qr-code" src="" alt="QR">
+            </div>
+            <div class="bill-box">
+                <div class="bill-row"><span>Số tiền:</span> <b>149.000đ</b></div>
+                <div class="bill-row"><span>Nội dung:</span> <b id="pay-msg"></b></div>
+            </div>
+            <input type="text" id="key-code" placeholder="Nhập mã kích hoạt...">
+            <button class="btn btn-green" onclick="actionActivate()">Kích hoạt ngay</button>
+        </div>
+
+        <div id="ui-login" class="hidden">
+            <h2 style="margin-bottom: 30px; text-align: center;">Đăng nhập</h2>
+            <input type="text" id="log-u" placeholder="Tên đăng nhập">
+            <input type="password" id="log-p" placeholder="Mật khẩu">
+            <button class="btn btn-blue" onclick="actionLogin()">Vào học ngay</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+<script>
+    // 1. Cấu hình Firebase
+    // 1. Cấu hình Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyBUPyMLemOPc2PxcUEL7idiWexFZvVVsjs",
+    authDomain: "telc-b1-ai.firebaseapp.com",
+    projectId: "telc-b1-ai",
+    storageBucket: "telc-b1-ai.firebasestorage.app",
+    messagingSenderId: "992197424488",
+    appId: "1:992197424488:web:d02815a8c95ee27ae0d2dd"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// QUAN TRỌNG: Kiểm tra lại tên này trên Firebase của bạn (users hay member?)
+const COLLECTION_NAME = "member"; 
+
+function switchUI(id) {
+    document.getElementById('ui-register').classList.add('hidden');
+    document.getElementById('ui-payment').classList.add('hidden');
+    document.getElementById('ui-login').classList.add('hidden');
+    document.getElementById(id).classList.remove('hidden');
+}
+
+// --- HÀM ĐĂNG KÝ ---
+function actionRegister() {
+    const user = document.getElementById('u').value.trim();
+    const pass = document.getElementById('p').value.trim();
+
+    if (!user || !pass) return alert("Vui lòng nhập đủ thông tin!");
+
+    sessionStorage.setItem('temp_u', user);
+    sessionStorage.setItem('temp_p', pass);
+
+    const content = "BIN" + user.toUpperCase();
+    document.getElementById('pay-msg').innerText = content;
+    document.getElementById('qr-code').src = `https://img.vietqr.io/image/MB-0348307488-compact2.png?amount=149000&addInfo=${encodeURIComponent(content)}`;
+
+    switchUI('ui-payment');
+    document.getElementById('left-badge').innerText = "⚡ ĐĂNG KÝ THÀNH CÔNG";
+}
+
+// --- HÀM KÍCH HOẠT ---
+async function actionActivate() {
+    const keyInput = document.getElementById('key-code').value.trim();
+    const user = sessionStorage.getItem('temp_u');
+    const pass = sessionStorage.getItem('temp_p');
+
+    if (!user) return alert("Lỗi: Vui lòng đăng ký lại!");
+    if (!keyInput) return alert("Hãy nhập mã Key!");
+
+    try {
+        const snap = await db.collection(COLLECTION_NAME).where('memberCode', '==', keyInput).where('isUsed', '==', false).get();
+
+        if (snap.empty) return alert("Key sai hoặc đã bị dùng!");
+
+        const devId = 'ID-' + Math.random().toString(36).substr(2, 9);
+        await db.collection(COLLECTION_NAME).doc(snap.docs[0].id).update({
+            username: user,
+            password: pass,
+            deviceId: devId,
+            isUsed: true
+        });
+
+        localStorage.setItem('my_dev_id', devId);
+        alert("🎉 Kích hoạt thành công!");
+        switchUI('ui-login');
+    } catch (e) { alert("Lỗi Firebase: " + e.message); }
+}
+
+// --- HÀM ĐĂNG NHẬP (ĐÃ FIX LỖI SAI THÔNG TIN) ---
+async function actionLogin() {
+    const u = document.getElementById('log-u').value.trim();
+    const p = document.getElementById('log-p').value.trim();
+    const myDev = localStorage.getItem('my_dev_id');
+
+    try {
+        const snap = await db.collection(COLLECTION_NAME)
+            .where('username', '==', u)
+            .where('password', '==', p)
+            .get();
+
+        if (!snap.empty) {
+            const userData = snap.docs[0].data();
+            if (userData.deviceId === myDev) {
+                // QUAN TRỌNG: Lưu trạng thái đăng nhập vào máy
+                localStorage.setItem('user_session', 'active'); 
+                alert("🎉 Đăng nhập thành công!");
+                window.location.replace("index.html"); // Dùng replace để không quay lại được trang login bằng nút Back
+            } else {
+                alert("❌ Thiết bị này không được phép!");
+            }
+        } else {
+            alert("❌ Sai tài khoản hoặc mật khẩu!");
+        }
+    } catch (e) { alert("Lỗi: " + e.message); }
+}
+
+window.onload = () => {
+    const myDev = localStorage.getItem('my_dev_id');
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+
+    // Nếu đã kích hoạt máy VÀ chưa đăng nhập thành công thì mới hiện Login
+    if (myDev && !isLoggedIn) {
+        switchUI('ui-login');
+    } 
+    // Nếu đã đăng nhập rồi mà vẫn ở trang login.html thì chuyển sang index.html luôn
+    else if (myDev && isLoggedIn && window.location.pathname.includes('login.html')) {
+        window.location.href = "index.html";
+    }
+};
+</script>
+</body>
+</html>
