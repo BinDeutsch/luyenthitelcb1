@@ -6,6 +6,13 @@
     <title>DEUTSCH PRO | Premium Learning Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        const myDev = localStorage.getItem('my_dev_id');
+        if (!myDev) {
+            alert("Thiết bị của bạn chưa được kích hoạt!");
+            window.location.replace("anmelden.html"); // Chú ý: Đổi tên đúng file đăng ký của bạn
+        }
+    </script>
     <style>
         :root {
             --bg-body: #050505;
@@ -116,11 +123,12 @@
         }
 
         .section-title {
-            font-s	ize: 2rem;
+            font-size: 2rem;
             font-weight: 800;
             margin-bottom: 10px;
             background: linear-gradient(to bottom right, #fff, #71717a);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -461,6 +469,42 @@ function resetQuiz() {
     timerBox.classList.remove('timer-critical');
     timerBox.style.background = "rgba(255, 127, 80, 0.1)";
 }
+    </script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBUPyMLemOPc2PxcUEL7idiWexFZvVVsjs",
+            authDomain: "telc-b1-ai.firebaseapp.com",
+            projectId: "telc-b1-ai",
+            storageBucket: "telc-b1-ai.firebasestorage.app",
+            messagingSenderId: "992197424488",
+            appId: "1:992197424488:web:d02815a8c95ee27ae0d2dd"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // 1. Kiểm tra mã máy và hiển thị thông tin người dùng từ Firestore
+        async function checkAccess() {
+            const myDev = localStorage.getItem('my_dev_id');
+            
+            try {
+                // Tìm tài khoản khớp với mã máy này
+                const snap = await db.collection('member').where('deviceId', '==', myDev).get();
+                
+                if (!snap.empty) {
+                    const userData = snap.docs[0].data();
+                    document.getElementById('user-display').innerText = "Học viên: " + userData.username;
+                } else {
+                    // Nếu có mã máy nhưng không tìm thấy trong Database (ví dụ bạn xóa trên Firebase)
+                    localStorage.clear();
+                    window.location.replace("anmelden.html");
+                }
+            } catch (e) {
+                console.error("Lỗi kiểm tra quyền:", e);
+            }
+        }
+
+       
+        checkAccess();
     </script>
 </body>
 </html>

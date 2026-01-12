@@ -6,6 +6,13 @@
     <title>DEUTSCHPRO | Lesen Teil 3</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script>
+        const myDev = localStorage.getItem('my_dev_id');
+        if (!myDev) {
+            alert("Thiết bị của bạn chưa được kích hoạt!");
+            window.location.replace("anmelden.html"); // Chú ý: Đổi tên đúng file đăng ký của bạn
+        }
+    </script>
     <style>
         :root {
             --bg-deep: #050507;

@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hören Teil 1 - Test 01</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        const myDev = localStorage.getItem('my_dev_id');
+        if (!myDev) {
+            alert("Thiết bị của bạn chưa được kích hoạt!");
+            window.location.replace("anmelden.html"); // Chú ý: Đổi tên đúng file đăng ký của bạn
+        }
+    </script>
     <style>
         :root {
             --bg-body: #0a0a0f;
