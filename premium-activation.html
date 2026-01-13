@@ -2,69 +2,315 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Thanh toán & Kích hoạt</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác Thực Thiết Bị - Telc B1 AI</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    /* CSS cho phần thông báo Zalo mới */
+    .zalo-contact {
+        background: rgba(0, 104, 255, 0.1);
+        border: 1px solid rgba(0, 104, 255, 0.3);
+        border-radius: 16px;
+        padding: 15px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .zalo-contact:hover {
+        background: rgba(0, 104, 255, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .zalo-icon {
+        width: 35px;
+        height: 35px;
+        background: #0068ff;
+        color: white;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .zalo-text {
+        text-align: left;
+    }
+
+    .zalo-text span {
+        display: block;
+        font-size: 11px;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .zalo-text b {
+        font-size: 15px;
+        color: #0068ff;
+    }
+</style>
     <style>
-        body { background: #050507; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .pay-card { background: #0f0f15; padding: 40px; border-radius: 20px; text-align: center; width: 100%; max-width: 400px; border: 1px solid rgba(255,255,255,0.05); }
-        .qr-img { width: 200px; background: white; padding: 10px; border-radius: 10px; margin-bottom: 20px; }
-        .note { color: #94a3b8; font-size: 13px; margin-bottom: 20px; }
-        input { width: 100%; padding: 12px; background: #000; border: 1px solid #333; border-radius: 8px; color: white; margin-bottom: 15px; text-align: center; }
-        .btn { background: #2563eb; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; }
+        :root {
+            --bg: #030407;
+            --card-bg: rgba(17, 18, 25, 0.98);
+            --accent: #3b82f6;
+            --border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --success: #10b981;
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s ease; }
+        body {
+			font-family: 'Plus Jakarta Sans', sans-serif;
+			letter-spacing: -0.2px; /* Giúp chữ trông khít và chuyên nghiệp hơn */
+		}
+
+/* Tùy chỉnh cho tiêu đề và các nút nhấn */
+		h3, .price-tag, .btn-activate {
+			font-weight: 800;
+			letter-spacing: -1px;
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+			}
+        body {
+            margin: 0; font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg); color: var(--text-main);
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            background-image: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1), transparent 80%);
+		
+        }
+
+        .pay-card {
+            background: var(--card-bg); backdrop-filter: blur(20px);
+            padding: 40px 30px; border-radius: 32px; border: 1px solid var(--border);
+            text-align: center; width: 95%; max-width: 420px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-label { font-size: 11px; color: var(--accent); font-weight: 800; letter-spacing: 2px; margin-bottom: 8px; text-transform: uppercase; }
+        .price-tag { font-size: 32px; font-weight: 800; color: var(--success); margin: 15px 0; display: block; }
+        
+        .qr-wrapper { 
+            background: white; padding: 12px; border-radius: 20px; 
+            margin: 20px auto; width: 220px; height: 220px; 
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.15);
+        }
+        .qr-img { width: 100%; height: 100%; border-radius: 10px; display: block; }
+
+        .info-box { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); padding: 20px; border-radius: 20px; margin-bottom: 25px; text-align: left; }
+        .info-item { font-size: 13px; margin-bottom: 10px; color: var(--text-dim); display: flex; justify-content: space-between; align-items: center; }
+        .info-item:last-child { margin-bottom: 0; }
+        .info-item b { color: #fff; font-family: 'Courier New', monospace; font-size: 14px; }
+        
+        .device-tag { background: rgba(59, 130, 246, 0.15); color: var(--accent); padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; max-width: 150px; overflow: hidden; text-overflow: ellipsis; }
+
+        .input-group { margin-top: 10px; position: relative; }
+        input { 
+            width: 100%; padding: 18px; background: #000; 
+            border: 1px solid var(--border); border-radius: 16px; 
+            color: #fff; font-weight: 700; text-align: center; 
+            letter-spacing: 2px; font-size: 16px;
+        }
+        input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
+        
+        .btn-activate { 
+            background: var(--accent); color: white; border: none; 
+            padding: 20px; border-radius: 16px; font-weight: 800; 
+            cursor: pointer; width: 100%; margin-top: 20px;
+            font-size: 16px; box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+        .btn-activate:hover { transform: translateY(-3px); background: #2563eb; }
+        .btn-activate:disabled { background: #1e293b; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        .footer-note { font-size: 11px; color: var(--text-dim); margin-top: 20px; line-height: 1.5; }
     </style>
 </head>
 <body>
 
 <div class="pay-card">
-    <h3>KÍCH HOẠT THÀNH VIÊN</h3>
-    <img src="LINK_ANH_QR_CUA_BAN" class="qr-img" alt="QR Thanh toán">
-    <p class="note">Sau khi chuyển khoản, hãy liên hệ SĐT: <b>0xxx.xxx.xxx</b> để nhận Mã Thành Viên.</p>
+    <div class="header-label">Security Protocol v3.0</div>
+    <h3 style="margin: 0; font-size: 26px; letter-spacing: -1px;">Kích hoạt Tài Khoản</h3>
+    <span class="price-tag">200.000 VNĐ</span>
+    <a href="https://zalo.me/0348307488" target="_blank" class="zalo-contact">
+    <div class="zalo-icon">Z</div>
+    <div class="zalo-text">
+        <span>Liên hệ ADMIN để nhận Key</span>
+        <b>Zalo: 0348.307.488</b>
+    </div>
+    <i class="fas fa-external-link-alt" style="margin-left: auto; color: #0068ff; font-size: 12px;"></i>
+</a>
+    <div class="qr-wrapper" id="qrContainer">
+        <div style="color: #000; font-size: 12px; font-weight: 600;">Đang tạo mã QR bảo mật...</div>
+    </div>
     
-    <input type="text" id="mCode" placeholder="Nhập mã thành viên tại đây">
-    <button class="btn" onclick="verifyCode()">Kích hoạt tài khoản</button>
+    <div class="info-box">
+        <div class="info-item">Nội dung: <b id="displayContent">...</b></div>
+        <div class="info-item">Ngân hàng: <b>MB Bank</b></div>
+        <div class="info-item">Chủ TK: <b>NGUYEN THE NGUYEN</b></div>
+        <div class="info-item" style="border-top: 1px solid rgba(255,255,255,0.05); margin-top: 12px; padding-top: 12px;">
+            <span>Mã thiết bị (ID):</span>
+            <span class="device-tag" id="displayDID">Đang quét...</span>
+        </div>
+    </div>
+    
+    <div class="input-group">
+        <input type="text" id="mCode" placeholder="NHẬP MÃ KÍCH HOẠT" autocomplete="off">
+    </div>
+    
+    <button class="btn-activate" id="btnMain" onclick="verifyAndLock()">XÁC THỰC THIẾT BỊ</button>
+    
+    <p class="footer-note">
+        <i class="fas fa-info-circle"></i> Tài khoản sẽ được gắn chặt với thiết bị này. <br> Không thể sử dụng tài khoản này trên thiết bị khác.
+    </p>
 </div>
 
 <script>
-    const firebaseConfig = { /* DÁN CONFIG CỦA BẠN */ };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    // 1. CẤU HÌNH HỆ THỐNG
+    const BANK_CONFIG = {
+        ID: "MB",
+        ACCOUNT: "0348307488",
+        NAME: "NGUYEN THE NGUYEN",
+        AMOUNT: 200000
+    };
 
+    const FIREBASE_CONFIG = {
+        apiKey: "AIzaSyBUPyMLemOPc2PxcUEL7idiWexFZvVVsjs",
+        authDomain: "telc-b1-ai.firebaseapp.com",
+        projectId: "telc-b1-ai",
+        storageBucket: "telc-b1-ai.firebasestorage.app",
+        messagingSenderId: "992197424488",
+        appId: "1:992197424488:web:d02815a8c95ee27ae0d2dd"
+    };
+
+    // 2. KHỞI TẠO 
     const urlParams = new URLSearchParams(window.location.search);
     const username = urlParams.get('u');
+    let currentDeviceID = "";
 
-    async function verifyCode() {
-        const code = document.getElementById('mCode').value.trim();
-        if(!code) return Swal.fire('Lỗi', 'Vui lòng nhập mã', 'error');
+    if (!username) {
+        Swal.fire({ icon: 'error', title: 'Thiếu dữ liệu', text: 'Vui lòng truy cập từ trang đăng ký!', confirmButtonColor: '#3b82f6' });
+        document.getElementById('btnMain').disabled = true;
+    }
 
-        Swal.showLoading();
-        const ip = await fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => d.ip);
+    // Tự động tạo mã chuyển khoản & QR
+    const transferContent = `KICH HOAT ${username || 'GUEST'}`.toUpperCase();
+    document.getElementById('displayContent').innerText = transferContent;
+    
+    const qrUrl = `https://img.vietqr.io/image/${BANK_CONFIG.ID}-${BANK_CONFIG.ACCOUNT}-compact2.png?amount=${BANK_CONFIG.AMOUNT}&addInfo=${encodeURIComponent(transferContent)}&accountName=${encodeURIComponent(BANK_CONFIG.NAME)}`;
+    document.getElementById('qrContainer').innerHTML = `<img src="${qrUrl}" class="qr-img" alt="Payment QR">`;
+
+    // 3. KẾT NỐI FIREBASE
+    firebase.initializeApp(FIREBASE_CONFIG);
+    const db = firebase.firestore();
+
+    // 4. LẤY DEVICE FINGERPRINT (MÃ MÁY)
+    async function getDeviceID() {
+        try {
+            const fp = await FingerprintJS.load();
+            const result = await fp.get();
+            currentDeviceID = result.visitorId;
+            document.getElementById('displayDID').innerText = currentDeviceID.toUpperCase();
+        } catch (e) {
+            console.error(e);
+            document.getElementById('displayDID').innerText = "FAILED";
+        }
+    }
+    getDeviceID();
+
+    // 5. THUẬT TOÁN XÁC THỰC & KHÓA CỨNG
+    async function verifyAndLock() {
+        const mCodeInput = document.getElementById('mCode').value.trim();
+
+        if (!mCodeInput) {
+            return Swal.fire({ icon: 'warning', title: 'Nhập mã', text: 'Vui lòng nhập mã thành viên để tiếp tục.', background: '#0a0a0c', color: '#fff' });
+        }
+
+        if (!currentDeviceID) {
+            return Swal.fire({ icon: 'error', title: 'Lỗi định danh', text: 'Không thể tạo mã máy. Hãy thử tải lại trang.', background: '#0a0a0c', color: '#fff' });
+        }
+
+        // Hiện loading chuyên nghiệp
+        Swal.fire({
+            title: 'Hệ thống đang xác thực',
+            html: 'Đang kiểm tra mã máy và khóa quyền truy cập...',
+            allowOutsideClick: false,
+            background: '#0a0a0c',
+            color: '#fff',
+            didOpen: () => Swal.showLoading()
+        });
 
         try {
-            const codeRef = db.collection("valid_codes").doc(code);
+            // Bước A: Kiểm tra mã thành viên trong Firebase
+            const codeRef = db.collection("valid_codes").doc(mCodeInput);
             const codeDoc = await codeRef.get();
 
-            if(!codeDoc.exists || codeDoc.data().used === true) {
-                throw new Error("Mã thành viên không hợp lệ hoặc đã được sử dụng!");
-            }
+            if (!codeDoc.exists) throw new Error("Mã kích hoạt không tồn tại!");
+            if (codeDoc.data().used === true) throw new Error("Mã này đã được sử dụng!");
 
-            // Cập nhật tài khoản người dùng
-            await db.collection("users").doc(username).update({
+            // Bước B: Gán Device ID vào User và kích hoạt tài khoản
+            const userRef = db.collection("users").doc(username);
+            
+            await userRef.update({
                 isActivated: true,
-                deviceIP: ip,
-                memberCode: code
+                deviceId: currentDeviceID, // KHÓA MÃ MÁY VÀO ĐÂY
+                memberCode: mCodeInput,
+                activatedDate: firebase.firestore.FieldValue.serverTimestamp()
             });
 
-            // Đánh dấu mã đã dùng
-            await codeRef.update({ used: true });
+            // Bước C: Đánh dấu mã thành viên đã bị dùng
+            await codeRef.update({
+                used: true,
+                usedBy: username,
+                usedAtDevice: currentDeviceID
+            });
 
-            Swal.fire('Thành công', 'Tài khoản đã được kích hoạt trên thiết bị này!', 'success')
-                .then(() => window.location.href = "auth.html");
+            // Bước D: Lưu ID vào máy khách để kiểm tra nhanh (Client-side sync)
+            localStorage.setItem('my_dev_id', currentDeviceID);
 
-        } catch (e) { Swal.fire('Thất bại', e.message, 'error'); }
+            // Thành công -> Chuyển hướng
+            Swal.fire({
+                icon: 'success',
+                title: 'Kích hoạt thành công',
+                text: 'Thiết bị của bạn đã được ghi nhận vào hệ thống.',
+                timer: 3000,
+                showConfirmButton: false,
+                background: '#0a0a0c',
+                color: '#fff'
+            });
+
+            setTimeout(() => {
+                window.location.href = "anmelden.html";
+            }, 3000);
+
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi kích hoạt',
+                text: error.message,
+                confirmButtonColor: '#ef4444',
+                background: '#0a0a0c',
+                color: '#fff'
+            });
+        }
     }
 </script>
+
 </body>
 </html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortschatz | Professional Elite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b0e14;
+            --sidebar: #0f1219;
+            --card-bg: #161a23;
+            --accent: #6366f1;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: rgba(255, 255, 255, 0.05);
+            --border-hover: rgba(99, 102, 241, 0.4);
+        }
+
+        * { box-sizing: border-box; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        body { 
+            margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: var(--bg); color: var(--text-main);
+            display: flex; height: 100vh; overflow: hidden;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 280px; background: var(--sidebar);
+            border-right: 1px solid var(--border);
+            display: flex; flex-direction: column; padding: 40px 24px;
+        }
+
+        .logo { 
+            font-size: 18px; font-weight: 700; letter-spacing: -0.5px; 
+            display: flex; align-items: center; gap: 10px; margin-bottom: 48px;
+        }
+        .logo i { color: var(--accent); font-size: 20px; }
+
+        .nav-label { 
+            font-size: 11px; font-weight: 700; color: var(--text-dim); 
+            text-transform: uppercase; letter-spacing: 1.5px; margin: 24px 0 12px 8px; 
+        }
+
+        .nav-btn {
+            display: flex; align-items: center; gap: 12px; width: 100%; 
+            padding: 12px 16px; border: none; background: none;
+            color: var(--text-dim); cursor: pointer; border-radius: 12px;
+            font-size: 14px; text-decoration: none; font-weight: 500;
+        }
+        .nav-btn:hover { background: rgba(255, 255, 255, 0.03); color: var(--text-main); }
+        .nav-btn.active { background: rgba(99, 102, 241, 0.1); color: var(--accent); }
+
+        .btn-back {
+            margin-top: auto; padding: 12px 16px; border-radius: 12px;
+            font-size: 13px; color: var(--text-dim); text-decoration: none;
+            display: flex; align-items: center; gap: 10px; border: 1px solid var(--border);
+        }
+        .btn-back:hover { border-color: var(--text-dim); color: var(--text-main); }
+
+        /* --- MAIN CONTENT --- */
+        .main-content { flex: 1; overflow-y: auto; padding: 64px 80px; position: relative; }
+        
+        /* Hiệu ứng ánh sáng nền */
+        .main-content::before {
+            content: ''; position: absolute; top: -10%; left: 30%; width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        header h1 { font-size: 32px; font-weight: 700; margin: 0; letter-spacing: -1px; }
+        header p { color: var(--text-dim); font-size: 16px; margin-top: 12px; max-width: 600px; }
+
+        /* --- SEARCH BAR --- */
+        .search-container {
+            margin: 40px 0; position: relative; max-width: 400px;
+        }
+        .search-container i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-dim); }
+        .search-input {
+            width: 100%; background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 12px; padding: 12px 12px 12px 48px; color: var(--text-main);
+            outline: none; font-size: 14px;
+        }
+        .search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1); }
+
+        /* --- GRID --- */
+        .voca-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        .voca-card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 20px; padding: 32px; text-decoration: none; color: inherit;
+            display: flex; flex-direction: column; position: relative;
+        }
+        
+        .voca-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .voca-card h3 { margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -0.3px; }
+        .voca-card p { margin: 16px 0 24px; font-size: 14px; color: var(--text-dim); line-height: 1.6; flex-grow: 1; }
+
+        .card-footer {
+            display: flex; align-items: center; justify-content: space-between;
+            padding-top: 20px; border-top: 1px solid var(--border);
+        }
+        .level-badge {
+            font-size: 10px; font-weight: 700; color: var(--accent);
+            background: rgba(99, 102, 241, 0.1); padding: 4px 10px; border-radius: 6px;
+            text-transform: uppercase;
+        }
+        .voca-stat { font-size: 12px; color: var(--text-dim); font-weight: 500; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="logo">
+        <i class="fas fa-layer-group"></i>
+        <span>VOCABULARY HUB</span>
+    </div>
+    
+    <span class="nav-label">Levels</span>
+    <button class="nav-btn active" data-filter="all"><i class="fas fa-border-all"></i> All Themes</button>
+    <button class="nav-btn" data-filter="a1"><i class="fas fa-seedling"></i> Level A1</button>
+    <button class="nav-btn" data-filter="a2"><i class="fas fa-mountain"></i> Level A2</button>
+    <button class="nav-btn" data-filter="b1"><i class="fas fa-crown"></i> Level B1</button>
+
+    <span class="nav-label">Categories</span>
+    <button class="nav-btn" data-filter="daily"><i class="fas fa-home"></i> Daily Life</button>
+    <button class="nav-btn" data-filter="work"><i class="fas fa-briefcase"></i> Professional</button>
+
+    <a href="index.html" class="btn-back">
+        <i class="fas fa-arrow-left"></i>
+        <span>Nach Hause</span>
+    </a>
+</aside>
+
+<main class="main-content">
+    <header>
+        <h1>Dictionary Gallery</h1>
+        <p>Explore specialized vocabulary modules designed for Telc Deutsch certification. Filter by level to start your progress.</p>
+    </header>
+
+    <div class="search-container">
+        <i class="fas fa-search"></i>
+        <input type="text" class="search-input" placeholder="Search topics...">
+    </div>
+
+    <div class="voca-grid">
+        <a href="topic-home.html" class="voca-card" data-cat="a1 daily">
+            <h3>Living & Home</h3>
+            <p>Master terms for household items, furniture, and daily routines in a German apartment.</p>
+            <div class="card-footer">
+                <span class="level-badge">A1 Telc</span>
+                <span class="voca-stat">42 Words</span>
+            </div>
+        </a>
+
+        <a href="topic-work.html" class="voca-card" data-cat="b1 work">
+            <h3>Corporate Culture</h3>
+            <p>Advanced vocabulary for meetings, project management, and professional communication.</p>
+            <div class="card-footer">
+                <span class="level-badge">B1 Telc</span>
+                <span class="voca-stat">65 Words</span>
+            </div>
+        </a>
+
+        <a href="topic-health.html" class="voca-card" data-cat="a2 daily">
+            <h3>Health & Wellness</h3>
+            <p>Essential phrases for visiting the doctor, describing symptoms and healthy habits.</p>
+            <div class="card-footer">
+                <span class="level-badge">A2 Telc</span>
+                <span class="voca-stat">38 Words</span>
+            </div>
+        </a>
+    </div>
+</main>
+
+<script>
+    // Logic Lọc trình độ
+    const btns = document.querySelectorAll('.nav-btn');
+    const cards = document.querySelectorAll('.voca-card');
+
+    btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            btns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filter = btn.dataset.filter;
+            cards.forEach(card => {
+                const tags = card.dataset.cat;
+                if (filter === 'all' || tags.includes(filter)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+    });
+
+    // Logic Tìm kiếm (Live Search)
+    const searchInput = document.querySelector('.search-input');
+    searchInput.addEventListener('input', (e) => {
+        const text = e.target.value.toLowerCase();
+        cards.forEach(card => {
+            const title = card.querySelector('h3').innerText.toLowerCase();
+            const desc = card.querySelector('p').innerText.toLowerCase();
+            if(title.includes(text) || desc.includes(text)) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

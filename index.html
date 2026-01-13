@@ -3,77 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Telc B1 Ôn Luyện</title>
+    <title>Dashboard - Deutsch zu lernen </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     
-    <script>
+  <script>
         const myDev = localStorage.getItem('my_dev_id');
         if (!myDev) {
             alert("Thiết bị của bạn chưa được kích hoạt!");
-            window.location.replace("anmelden.html"); // Chú ý: Đổi tên đúng file đăng ký của bạn
+            window.location.replace("anmelden.html");
         }
     </script>
 
     <style>
         :root {
-            --bg-body: #0a0a0c;
-            --bg-card: #151518;
+            --bg-body: #020408;
+            --accent-main: #00f2ff;
+            --accent-second: #7000ff;
             --accent-pink: #ff007a;
-            --text-main: #ffffff;
-            --text-dim: #94a3b8;
-            --border-color: #2a2a2e;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #e2e8f0;
         }
+
+        * { box-sizing: border-box; transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
 
         body {
-            margin: 0; font-family: 'Inter', sans-serif;
-            background-color: var(--bg-body); color: var(--text-main);
-            min-height: 100vh;
+            margin: 0; font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-body); color: var(--text);
+            min-height: 100vh; overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(112, 0, 255, 0.15) 0%, transparent 35%),
+                radial-gradient(circle at 100% 100%, rgba(0, 242, 255, 0.1) 0%, transparent 35%);
         }
 
+        /* --- NAVIGATION --- */
         nav {
-            padding: 20px 50px; display: flex;
-            justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--border-color);
+            padding: 20px 40px; display: flex; justify-content: space-between; align-items: center;
+            backdrop-filter: blur(20px); background: rgba(2, 4, 8, 0.7);
+            border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000;
         }
 
-        .user-info { display: flex; align-items: center; gap: 15px; }
+        .logo { font-size: 22px; font-weight: 700; letter-spacing: -1px; display: flex; align-items: center; gap: 10px; }
+        .logo span { background: linear-gradient(90deg, var(--accent-main), var(--accent-pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
         .logout-btn { 
-            color: var(--text-dim); text-decoration: none; font-size: 14px; 
-            padding: 5px 15px; border: 1px solid var(--border-color); border-radius: 8px;
+            text-decoration: none; color: #ff4d4d; font-size: 13px; font-weight: 600;
+            padding: 8px 20px; border: 1px solid rgba(255, 77, 77, 0.2); border-radius: 100px;
+            background: rgba(255, 77, 77, 0.05);
         }
+        .logout-btn:hover { background: #ff4d4d; color: white; box-shadow: 0 0 20px rgba(255, 77, 77, 0.4); }
 
-        .container { max-width: 1000px; margin: 50px auto; padding: 0 20px; }
-        .welcome-section { margin-bottom: 40px; }
-        .welcome-section h1 { font-size: 28px; margin-bottom: 10px; }
-        .welcome-section p { color: var(--text-dim); font-size: 15px; }
+        /* --- CONTAINER --- */
+        .container { max-width: 1200px; margin: 60px auto; padding: 0 30px; }
+        
+        .welcome-section { margin-bottom: 60px; text-align: center; }
+        .welcome-section h1 { font-size: 48px; font-weight: 700; margin: 0; letter-spacing: -2px; }
+        .welcome-section p { color: #94a3b8; font-size: 18px; margin-top: 15px; }
 
-        .skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; }
+        /* --- GRID --- */
+        .skill-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         
         .skill-card {
-            background: var(--bg-card); border: 1px solid var(--border-color);
-            border-radius: 24px; padding: 40px 30px; text-align: center;
-            transition: all 0.3s ease; cursor: pointer; text-decoration: none; color: white;
+            background: var(--glass); border: 1px solid var(--border);
+            border-radius: 30px; padding: 50px 30px; text-align: center;
+            text-decoration: none; position: relative; overflow: hidden;
+            display: flex; flex-direction: column; align-items: center;
         }
 
+        /* Hiệu ứng viền sáng khi hover */
         .skill-card:hover {
-            transform: translateY(-8px); border-color: var(--accent-pink);
-            box-shadow: 0 10px 30px rgba(255, 0, 122, 0.1);
+            transform: translateY(-15px);
+            border-color: var(--accent-main);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 242, 255, 0.1);
         }
 
-        .skill-card i { font-size: 40px; margin-bottom: 20px; display: block; }
-        .skill-card h3 { font-size: 20px; margin-bottom: 10px; color: #fff; }
-        .skill-card p { color: var(--text-dim); font-size: 14px; opacity: 0.8; }
+        .skill-card i { 
+            font-size: 45px; margin-bottom: 30px; 
+            background: linear-gradient(135deg, #fff, rgba(255,255,255,0.4));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(255,255,255,0.2));
+        }
 
-        .lese i { color: #f39c12; }
-        .hoer i { color: #ff007a; }
-        .schreib i { color: #3498db; }
-        .sprech i { color: #2ecc71; }
-		.gramm i { color: #ff7f50; }
-		.worts i { color: #a29bfe; }
-		
+        /* Màu sắc cá nhân hóa cho từng icon */
+        .lese:hover i { -webkit-text-fill-color: #fbbf24; }
+        .hoer:hover i { -webkit-text-fill-color: #ff007a; }
+        .schreib:hover i { -webkit-text-fill-color: #38bdf8; }
+        .sprech:hover i { -webkit-text-fill-color: #34d399; }
+        .gramm:hover i { -webkit-text-fill-color: #fb7185; }
+        .worts:hover i { -webkit-text-fill-color: #818cf8; }
 
-        @media (max-width: 600px) {
-            .skill-grid { grid-template-columns: 1fr; }
+        .skill-card h3 { font-size: 20px; font-weight: 700; margin: 0; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+        .skill-card p { color: #64748b; font-size: 14px; margin-top: 15px; line-height: 1.6; }
+
+        @media (max-width: 1024px) { .skill-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 650px) { 
+            .skill-grid { grid-template-columns: 1fr; } 
+            .welcome-section h1 { font-size: 32px; }
             nav { padding: 20px; }
         }
     </style>
@@ -81,49 +108,49 @@
 <body>
 
     <nav>
-        <div style="font-weight: 800; font-size: 20px;">TELC<span style="color:var(--accent-pink)">B1</span> AI</div>
-        <div class="user-info">
-            <span id="user-display" style="font-size: 14px; color: var(--text-dim);">Học viên</span>
-            <a href="anmelden.html" class="logout-btn" onclick="logout()">Đăng xuất</a>
+        <div class="logo">DEUTSCH<span>AI</span> </div>
+        <div class="user-info" style="display: flex; align-items: center; gap: 20px;">
+            <span id="user-display" style="font-weight: 500; font-size: 14px; color: var(--accent-main);">........</span>
+            <a href="javascript:void(0)" class="logout-btn" onclick="logout()">LOGOUT</a>
         </div>
     </nav>
 
     <div class="container">
         <div class="welcome-section">
-            <h1>Chào mừng bạn quay trở lại!</h1>
-            <p>Chọn một kỹ năng để bắt đầu luyện tập ngay hôm nay.</p>
+            <h1>Lernen mit AI</h1>
+            <p>Nâng tầm kỹ năng tiếng Đức với công nghệ AI</p>
         </div>
 
         <div class="skill-grid">
             <a href="leseverstehen.html" class="skill-card lese">
-                <i class="fas fa-book-reader"></i>
-                <h3>Leseverstehen - B1</h3>
-                <p>Đọc hiểu văn bản & Từ vựng</p>
+                <i class="fas fa-book-open"></i>
+                <h3>Lesenverstehen</h3>
+                <p>Phân tích sâu cấu trúc bài đọc và từ vựng Telc A1 - B1.</p>
             </a>
             <a href="hoerverstehen.html" class="skill-card hoer">
-                <i class="fas fa-headphones-alt"></i>
-                <h3>Hörverstehen - B1</h3>
-                <p>Nghe hiểu hội thoại thực tế</p>
+                <i class="fas fa-wave-square"></i>
+                <h3>Hoerverstehen</h3>
+                <p>Luyện tai với âm thanh đa kênh và AI nhận diện giọng nói.</p>
             </a>
             <a href="schreiben.html" class="skill-card schreib">
-                <i class="fas fa-pen-fancy"></i>
-                <h3>Schreiben - B1</h3>
-                <p>Viết thư & Phản hồi cùng AI</p>
+                <i class="fas fa-feather-alt"></i>
+                <h3>Schreiben</h3>
+                <p>Soạn thảo văn bản và sửa lỗi ngữ pháp theo thời gian thực.</p>
             </a>
             <a href="sprechen.html" class="skill-card sprech">
-                <i class="fas fa-microphone-alt"></i>
-                <h3>Sprechen - B1</h3>
-                <p>Luyện nói trực tiếp với AI</p>
+                <i class="fas fa-brain"></i>
+                <h3>Sprechen</h3>
+                <p>Đối thoại trực tiếp với AI để phản xạ không cần suy nghĩ.</p>
             </a>
-			<a href="sprechen.html" class="skill-card gramm">
-                <i class="fas fa-book"></i>
-                <h3>Grammtik</h3>
-                <p>Học và Củng cố ngữ pháp của bạn từ A1 - B1</p>
+            <a href="grammatik.html" class="skill-card gramm">
+                <i class="fas fa-atom"></i>
+                <h3>Grammatik</h3>
+                <p>Hệ thống lại toàn bộ cấu trúc câu một cách khoa học.</p>
             </a>
-			<a href="sprechen.html" class="skill-card worts">
+            <a href="vokalbel.html" class="skill-card worts">
                 <i class="fas fa-spell-check"></i>
                 <h3>Wortschatz</h3>
-                <p>Mở rộng vốn từ vựng tiếng Đức</p>
+                <p>Kho từ vựng khổng lồ được phân loại theo tần suất thi.</p>
             </a>
         </div>
     </div>
@@ -143,31 +170,29 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // 1. Kiểm tra mã máy và hiển thị thông tin người dùng từ Firestore
         async function checkAccess() {
             const myDev = localStorage.getItem('my_dev_id');
+            if (!myDev) return; 
             
             try {
-                // Tìm tài khoản khớp với mã máy này
                 const snap = await db.collection('member').where('deviceId', '==', myDev).get();
-                
                 if (!snap.empty) {
                     const userData = snap.docs[0].data();
                     document.getElementById('user-display').innerText = "Học viên: " + userData.username;
                 } else {
-                    // Nếu có mã máy nhưng không tìm thấy trong Database (ví dụ bạn xóa trên Firebase)
                     localStorage.clear();
                     window.location.replace("anmelden.html");
                 }
             } catch (e) {
-                console.error("Lỗi kiểm tra quyền:", e);
+                console.error("Lỗi:", e);
+                document.getElementById('user-display').innerText = "Guest Mode";
             }
         }
 
         function logout() {
-            if(confirm("Bạn có chắc chắn muốn đăng xuất? Mã máy sẽ bị xóa.")) {
-                localStorage.clear(); // Xóa sạch dấu vết mã máy
-                window.location.replace("anmelden.html"); // Về trang đăng ký
+            if(confirm("Xác nhận đăng xuất và xóa mã máy?")) {
+                localStorage.clear();
+                window.location.replace("anmelden.html");
             }
         }
 

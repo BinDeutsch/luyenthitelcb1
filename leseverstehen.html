@@ -3,167 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leseverstehen - Telc B1 AI</title>
+    <title>Leseverstehen - Premium Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&display=swap" rel="stylesheet">
+    
     <script>
         const myDev = localStorage.getItem('my_dev_id');
         if (!myDev) {
             alert("Thiết bị của bạn chưa được kích hoạt!");
-            window.location.replace("anmelden.html"); // Chú ý: Đổi tên đúng file đăng ký của bạn
+            window.location.replace("anmelden.html");
         }
     </script>
+
     <style>
         :root {
-            --bg-body: #0a0a0c;
-            --bg-card: #151518;
-            --accent-orange: #f39c12;
+            --bg: #040508;
+            --card-glass: rgba(15, 18, 25, 0.7);
+            --accent: #6366f1;
+            --accent-2: #a855f7;
+            --border: rgba(255, 255, 255, 0.08);
             --text-main: #ffffff;
             --text-dim: #94a3b8;
-            --border-color: #2a2a2e;
         }
+
+        * { box-sizing: border-box; transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
 
         body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
+            margin: 0; font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg); color: var(--text-main);
             min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(168, 85, 247, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
         }
 
-        /* Header Navigation */
+        /* --- NAVIGATION --- */
         nav {
-            padding: 15px 40px;
-            display: flex;
-            align-items: center;
-            background: #111118;
-            border-bottom: 1px solid var(--border-color);
+            padding: 20px 6%; display: flex; align-items: center; justify-content: space-between;
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            background: rgba(4, 5, 8, 0.6);
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 1000;
         }
 
-        .back-btn {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-size: 14px;
-            margin-right: 20px;
-            transition: 0.3s;
+        .back-link {
+            text-decoration: none; color: var(--text-dim); font-size: 13px;
+            font-weight: 600; display: flex; align-items: center; gap: 8px;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .back-link:hover { color: var(--accent); }
+
+        .nav-brand { font-weight: 800; font-size: 1.2rem; background: linear-gradient(to right, #fff, #6366f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* --- CONTAINER --- */
+        .container { 
+            max-width: 1200px; margin: 40px auto; padding: 0 30px; 
         }
 
-        .back-btn:hover { color: white; }
+        .header-content { margin-bottom: 50px; }
+        .header-content h1 { 
+            font-size: clamp(2rem, 5vw, 3.5rem); margin: 0; font-weight: 800; letter-spacing: -2px; 
+        }
+        .header-content p { color: var(--text-dim); margin-top: 15px; font-size: 1.1rem; max-width: 600px; }
 
-        .nav-title { font-weight: 700; font-size: 18px; }
-
-        /* Main Content */
-        .container {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 0 20px;
+        /* --- MODERN GRID --- */
+        .module-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 30px; 
         }
 
-        .page-header { margin-bottom: 30px; }
-        .page-header h1 { font-size: 28px; color: var(--accent-orange); }
-
-        /* Grid for 3 Teile */
-        .teil-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+        .module-card {
+            background: var(--card-glass); border: 1px solid var(--border);
+            border-radius: 35px; padding: 45px 35px; text-decoration: none;
+            display: flex; flex-direction: column; position: relative;
+            overflow: hidden; backdrop-filter: blur(10px);
         }
 
-        .teil-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 30px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        /* Hiệu ứng viền sáng đuổi quanh card */
+        .module-card::before {
+            content: ""; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            z-index: -1; border-radius: 37px; opacity: 0; transition: 0.5s;
         }
 
-        .teil-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-orange);
-            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.1);
+        .module-card:hover {
+            transform: translateY(-12px); border-color: transparent;
+        }
+        .module-card:hover::before { opacity: 0.4; }
+
+        .icon-wrapper {
+            width: 70px; height: 70px; border-radius: 24px;
+            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 35px; font-size: 26px; color: var(--accent);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        .teil-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(243, 156, 18, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
+        .module-card h3 { font-size: 1.6rem; font-weight: 800; margin: 0; color: #fff; }
+        .module-card .tag { 
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--accent); font-weight: 800; margin-bottom: 10px; display: block;
         }
+        .module-card p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.7; margin-top: 15px; margin-bottom: 30px; }
 
-        .teil-icon i { color: var(--accent-orange); font-size: 22px; }
-
-        .teil-card h3 { font-size: 20px; margin: 0 0 10px 0; }
-        .teil-card p { color: var(--text-dim); font-size: 14px; line-height: 1.5; margin-bottom: 20px; }
-
-        .btn-start {
-            background: #1f1f29;
-            color: white;
-            padding: 10px;
-            border-radius: 10px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 14px;
-            border: 1px solid var(--border-color);
-            transition: 0.3s;
+        .start-action {
+            display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 13px;
+            color: #fff; margin-top: auto;
         }
+        .start-action i { font-size: 10px; transition: 0.3s; }
+        .module-card:hover .start-action i { transform: translateX(8px); color: var(--accent); }
 
-        .teil-card:hover .btn-start {
-            background: var(--accent-orange);
-            border-color: var(--accent-orange);
-        }
-
-        @media (max-width: 900px) {
-            .teil-grid { grid-template-columns: 1fr; }
+        /* --- MOBILE OPTIMIZATION --- */
+        @media (max-width: 650px) {
+            nav { padding: 15px 25px; }
+            .container { margin: 30px auto; padding: 0 20px; }
+            .module-card { padding: 35px 25px; border-radius: 28px; }
+            .header-content h1 { font-size: 2.2rem; }
+            .module-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Quay lại</a>
-        <div class="nav-title">Kỹ năng Đọc hiểu (Leseverstehen)</div>
+        <a href="index.html" class="back-link"><i class="fas fa-chevron-left"></i> Home</a>
+        <div class="nav-brand">TELC B1 AI</div>
     </nav>
 
     <div class="container">
-        <div class="page-header">
-            <h1>Luyện tập theo từng phần</h1>
-            <p>Chọn một phần thi cụ thể để bắt đầu luyện tập với AI.</p>
+        <div class="header-content">
+            <h1>Leseverstehen</h1>
+            <p>Hệ thống học tập thích ứng AI giúp bạn chinh phục các phần thi Đọc hiểu theo cấu trúc Telc B1 một cách thông minh nhất.</p>
         </div>
 
-        <div class="teil-grid">
-            <a href="lese-test-list.html" class="teil-card">
-                <div>
-                    <div class="teil-icon"><i class="fas fa-heading"></i></div>
-                    <h3>Teil 1</h3>
-                    <p>Nối tiêu đề (Überschriften) phù hợp với 5 đoạn văn bản ngắn.</p>
-                </div>
-                <div class="btn-start">Luyện tập ngay</div>
+        <div class="module-grid">
+            <a href="lese-test-list.html" class="module-card">
+                <span class="tag">Selection Protocol</span>
+                <div class="icon-wrapper"><i class="fas fa-layer-group"></i></div>
+                <h3>Teil 1: Matching</h3>
+                <p>Nối tiêu đề bài viết cho 5 văn bản ngắn. Rèn luyện khả năng lọc từ khóa và nắm bắt ý đồ chính của tác giả nhanh chóng.</p>
+                <div class="start-action">KÍCH HOẠT MODULE <i class="fas fa-arrow-right"></i></div>
             </a>
 
-            <a href="lese-teil2-list.html" class="teil-card">
-                <div>
-                    <div class="teil-icon"><i class="fas fa-file-alt"></i></div>
-                    <h3>Teil 2</h3>
-                    <p>Đọc hiểu và điền từ còn thiếu vào đoạn Text dạng Sprachbaustein .</p>
-                </div>
-                <div class="btn-start">Luyện tập ngay</div>
+            <a href="lese-teil2-list.html" class="module-card">
+                <span class="tag">Context Analysis</span>
+                <div class="icon-wrapper"><i class="fas fa-puzzle-piece"></i></div>
+                <h3>Teil 2: Cloze Test</h3>
+                <p>Luyện tập Sprachbausteine (Điền từ vào chỗ trống). Củng cố ngữ pháp nâng cao và khả năng nhận diện cấu trúc câu B1.</p>
+                <div class="start-action">KÍCH HOẠT MODULE <i class="fas fa-arrow-right"></i></div>
             </a>
 
-            <a href="lese-teil3-list.html" class="teil-card">
-                <div>
-                    <div class="teil-icon"><i class="fas fa-ad"></i></div>
-                    <h3>Teil 3</h3>
-                    <p>Đọc quảng cáo (Anzeigen) và chọn thông tin phù hợp với tình huống.</p>
-                </div>
-                <div class="btn-start">Luyện tập ngay</div>
+            <a href="lese-teil3-list.html" class="module-card">
+                <span class="tag">Info Retrieval</span>
+                <div class="icon-wrapper"><i class="fas fa-bullseye"></i></div>
+                <h3>Teil 3: Anzeigen</h3>
+                <p>Xử lý thông tin quảng cáo thực tế. Học cách tìm kiếm dữ liệu cụ thể để khớp với nhu cầu của 10 tình huống khác nhau.</p>
+                <div class="start-action">KÍCH HOẠT MODULE <i class="fas fa-arrow-right"></i></div>
             </a>
         </div>
     </div>

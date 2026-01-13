@@ -3,220 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lesenverstehen Teil 1 - Test List</title>
+    <title>Leseverstehen Teil 1 - B1 </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    
     <script>
         const myDev = localStorage.getItem('my_dev_id');
         if (!myDev) {
             alert("Thiết bị của bạn chưa được kích hoạt!");
-            window.location.replace("anmelden.html"); // Chú ý: Đổi tên đúng file đăng ký của bạn
+            window.location.replace("anmelden.html");
         }
     </script>
+
     <style>
         :root {
-            --bg-body: #0d0d12;
-            --bg-card: #16161e;
-            --accent-orange: #f39c12;
-            --text-main: #ffffff;
-            --text-dim: #94a3b8;
-            --border-color: #2a2a2e;
-            --success: #10b981;
+            --bg: #05060f;
+            --primary: #00f2ff;
+            --secondary: #7000ff;
+            --surface: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #ffffff;
+            --text-muted: #64748b;
         }
+
+        * { box-sizing: border-box; transition: all 0.3s ease; }
 
         body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
+            margin: 0; font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg); color: var(--text);
             min-height: 100vh;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(112, 0, 255, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(0, 242, 255, 0.05) 0px, transparent 50%);
         }
 
+        /* --- NAV --- */
         nav {
-            padding: 15px 40px;
-            display: flex;
-            align-items: center;
-            background: #111118;
-            border-bottom: 1px solid var(--border-color);
+            padding: 20px 5%; display: flex; align-items: center; justify-content: space-between;
+            background: rgba(5, 6, 15, 0.8); backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100;
         }
 
-        .back-btn {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-size: 14px;
-            margin-right: 20px;
+        .back-link {
+            text-decoration: none; color: var(--text-muted); font-size: 14px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .back-link:hover { color: var(--primary); }
+
+        .nav-title { font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 12px; color: var(--primary); }
+
+        /* --- CONTAINER --- */
+        .container { max-width: 850px; margin: 50px auto; padding: 0 20px; }
+
+        .header-section { margin-bottom: 50px; position: relative; }
+        .header-section h1 { font-size: 42px; font-weight: 700; margin: 0; letter-spacing: -1px; }
+        .header-section p { color: var(--text-muted); margin-top: 10px; font-size: 16px; }
+
+        .stats-pill {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--surface); padding: 6px 16px; border-radius: 100px;
+            border: 1px solid var(--border); margin-top: 20px; font-size: 13px;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
+        /* --- LIST --- */
+        .test-stack { display: flex; flex-direction: column; gap: 20px; }
+
+        .test-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 24px; padding: 25px; text-decoration: none;
+            display: flex; justify-content: space-between; align-items: center;
+            position: relative; overflow: hidden;
         }
 
-        .header-box {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 30px;
+        .test-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(0, 242, 255, 0.5);
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        .header-box h1 { font-size: 24px; margin: 0; color: var(--accent-orange); }
+        /* Border Beam Effect */
+        .test-card::after {
+            content: ""; position: absolute; top: 0; left: -100%; width: 50%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            transition: 0.5s;
+        }
+        .test-card:hover::after { left: 100%; }
 
-        /* Danh sách bài Test */
-        .test-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .main-info { display: flex; align-items: center; gap: 25px; }
+
+        .index-box {
+            font-size: 24px; font-weight: 700; color: rgba(255,255,255,0.1);
+            font-style: italic;
         }
 
-        .test-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-decoration: none;
-            color: white;
-            transition: 0.3s;
+        .details h3 { font-size: 18px; margin: 0; color: #fff; font-weight: 600; }
+        .details .meta { 
+            display: flex; gap: 15px; margin-top: 8px; 
+            font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;
         }
 
-        .test-item:hover {
-            border-color: var(--accent-orange);
-            background: #1c1c26;
-            transform: translateX(5px);
+        .action-zone { display: flex; align-items: center; gap: 20px; }
+
+        .status-text { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); opacity: 0.6; }
+        .status-text.done { color: #00ffaa; opacity: 1; }
+
+        .play-trigger {
+            width: 50px; height: 50px; border-radius: 18px;
+            background: var(--bg); border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--primary); font-size: 18px;
+            box-shadow: inset 0 0 10px rgba(0, 242, 255, 0.1);
         }
 
-        .test-info {
-            display: flex;
-            align-items: center;
-            gap: 20px;
+        .test-card:hover .play-trigger {
+            background: var(--primary); color: #000;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+            transform: rotate(-10deg);
         }
 
-        .test-number {
-            width: 45px;
-            height: 45px;
-            background: rgba(243, 156, 18, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent-orange);
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .test-details h3 { font-size: 16px; margin: 0 0 5px 0; }
-        .test-details p { font-size: 13px; color: var(--text-dim); margin: 0; }
-
-        .test-status {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .status-badge {
-            font-size: 12px;
-            padding: 4px 12px;
-            border-radius: 20px;
-            background: #1f1f29;
-            color: var(--text-dim);
-        }
-
-        .status-badge.completed {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-        }
-
-        .btn-play {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            background: var(--accent-orange);
-            color: black;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-        }
-
+        /* --- RESPONSIVE --- */
         @media (max-width: 600px) {
-            .test-status .status-badge { display: none; }
+            .header-section h1 { font-size: 32px; }
+            .index-box { display: none; }
+            .test-card { padding: 20px; border-radius: 20px; }
+            .details h3 { font-size: 16px; }
+            .meta { font-size: 10px; }
+            .status-text { display: none; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="leseverstehen.html" class="back-btn"><i class="fas fa-arrow-left"></i> Quay lại</a>
-        <div style="font-weight: 700;">Leseverstehen - Danh sách bài thi</div>
+        <a href="leseverstehen.html" class="back-link">
+            <i class="fas fa-long-arrow-alt-left"></i> Nach Hause
+        </a>
+        <div class="nav-title">Lesenverstehen</div>
     </nav>
 
     <div class="container">
-        <div class="header-box">
-            <div>
-                <h1>Bộ đề luyện tập</h1>
-                <p style="color: var(--text-dim); margin-top: 5px;">Chọn một đề thi để bắt đầu làm bài.</p>
-            </div>
-            <div style="font-size: 14px; color: var(--text-dim);">
-                <span style="color: var(--success);">0</span>/10 Đã hoàn thành
+        <div class="header-section">
+            <h1>Test Modules</h1>
+            <p>Intelligence-driven German language assessment.</p>
+            <div class="stats-pill">
+                <i class="fas fa-chart-line" style="color: var(--primary);"></i>
+                <span>Tổng <b>10</b> Test</span>
             </div>
         </div>
 
-        <div class="test-list">
-            <a href="lese-teil1-exam-01.html" class="test-item">
-                <div class="test-info">
-                    <div class="test-number">01</div>
-                    <div class="test-details">
-                        <h3>Lese-Test 01: Petra</h3>
-                        <p>5 đoạn văn • 15 phút</p>
+        <div class="test-stack">
+            <a href="lese-teil1-exam-01.html" class="test-card">
+                <div class="main-info">
+                    <div class="index-box">01</div>
+                    <div class="details">
+                        <h3>Petra: Personal Profile</h3>
+                        <div class="meta">
+                            <span><i class="far fa-copy"></i> 5 Texts</span>
+                            <span><i class="far fa-clock"></i> 15 Min</span>
+                        </div>
                     </div>
                 </div>
-                <div class="test-status">
-                    <span class="status-badge">Chưa làm</span>
-                    <div class="btn-play"><i class="fas fa-play"></i></div>
+                <div class="action-zone">
+                    <span class="status-text">Pending</span>
+                    <div class="play-trigger"><i class="fas fa-bolt"></i></div>
                 </div>
             </a>
 
-            <a href="lese-teil1-exam-02.html" class="test-item">
-                <div class="test-info">
-                    <div class="test-number">02</div>
-                    <div class="test-details">
-                        <h3>Lese-Test 02: Eva</h3>
-                        <p>5 đoạn văn • 15 phút</p>
+            <a href="lese-teil1-exam-02.html" class="test-card">
+                <div class="main-info">
+                    <div class="index-box">02</div>
+                    <div class="details">
+                        <h3>Eva: Daily Routine</h3>
+                        <div class="meta">
+                            <span><i class="far fa-copy"></i> 5 Texts</span>
+                            <span><i class="far fa-clock"></i> 15 Min</span>
+                        </div>
                     </div>
                 </div>
-                <div class="test-status">
-                    <span class="status-badge">Chưa làm</span>
-                    <div class="btn-play"><i class="fas fa-play"></i></div>
+                <div class="action-zone">
+                    <span class="status-text">Pending</span>
+                    <div class="play-trigger"><i class="fas fa-bolt"></i></div>
                 </div>
             </a>
 
-            <a href="lese-teil1-exam-03.html" class="test-item">
-                <div class="test-info">
-                    <div class="test-number">03</div>
-                    <div class="test-details">
-                        <h3>Lese-Test 03: Sophie</h3>
-                        <p>5 đoạn văn • 15 phút</p>
+            <a href="lese-teil1-exam-03.html" class="test-card">
+                <div class="main-info">
+                    <div class="index-box">03</div>
+                    <div class="details">
+                        <h3>Sophie: Education Path</h3>
+                        <div class="meta">
+                            <span><i class="far fa-copy"></i> 5 Texts</span>
+                            <span><i class="far fa-clock"></i> 15 Min</span>
+                        </div>
                     </div>
                 </div>
-                <div class="test-status">
-                    <span class="status-badge completed"><i class="fas fa-check"></i> Đã xong</span>
-                    <div class="btn-play"><i class="fas fa-redo"></i></div>
+                <div class="action-zone">
+                    <span class="status-text">Pending</span>
+                    <div class="play-trigger"><i class="fas fa-bolt"></i></div>
                 </div>
             </a>
 
-            <a href="#" class="test-item">
-                <div class="test-info">
-                    <div class="test-number">04</div>
-                    <div class="test-details">
-                        <h3>Lese-Test 04: Môi trường & Sức khỏe</h3>
-                        <p>5 đoạn văn • 15 phút</p>
+            <a href="#" class="test-card">
+                <div class="main-info">
+                    <div class="index-box">04</div>
+                    <div class="details">
+                        <h3>Environment & Health</h3>
+                        <div class="meta">
+                            <span><i class="far fa-copy"></i> 5 Texts</span>
+                            <span><i class="far fa-clock"></i> 15 Min</span>
+                        </div>
                     </div>
                 </div>
-                <div class="test-status">
-                    <span class="status-badge">Chưa làm</span>
-                    <div class="btn-play"><i class="fas fa-play"></i></div>
+                <div class="action-zone">
+                    <span class="status-text">Pending</span>
+                    <div class="play-trigger"><i class="fas fa-bolt"></i></div>
                 </div>
             </a>
         </div>
