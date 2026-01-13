@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MASTER GRAMMAR | Premium Edition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0f1015;
+            --bg-sidebar: #16171d;
+            --bg-card: #1c1d25;
+            --primary-grad: linear-gradient(90deg, #a29bfe, #ff7f50);
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+            --border: rgba(255, 255, 255, 0.08);
+            --accent-purple: #a29bfe;
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        body { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-deep); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
+
+        /* --- SIDEBAR --- */
+        .sidebar { width: 300px; background: var(--bg-sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; }
+        .sidebar-header { padding: 40px 25px; border-bottom: 1px solid var(--border); }
+        .logo { font-size: 22px; font-weight: 800; letter-spacing: -1px; display: flex; align-items: center; gap: 10px; margin-bottom: 30px; }
+        .logo i { background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 28px; }
+
+        .btn-back-home { display: flex; align-items: center; gap: 10px; color: var(--text-dim); text-decoration: none; font-size: 12px; font-weight: 700; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 12px; }
+        .btn-back-home:hover { background: rgba(255,255,255,0.1); color: var(--text-main); }
+
+        .sidebar-scroll { flex-grow: 1; overflow-y: auto; padding: 25px; scrollbar-width: none; }
+        .sidebar-scroll::-webkit-scrollbar { display: none; }
+
+        .filter-group { margin-bottom: 35px; }
+        .filter-label { font-size: 11px; font-weight: 800; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 15px; display: block; }
+
+        .filter-btn {
+            display: flex; align-items: center; justify-content: space-between; width: 100%;
+            padding: 14px 16px; margin-bottom: 8px; background: transparent; border: 1px solid transparent;
+            color: var(--text-dim); border-radius: 14px; cursor: pointer; font-weight: 600;
+        }
+        .filter-btn:hover { background: rgba(255,255,255,0.03); }
+        .filter-btn.active { background: rgba(162, 155, 254, 0.1) !important; border-color: var(--accent-purple) !important; color: var(--accent-purple) !important; }
+        .filter-btn i { font-size: 14px; opacity: 0.5; }
+
+        /* --- MAIN CONTENT --- */
+        .main-content { flex-grow: 1; overflow-y: auto; padding: 60px 80px; position: relative; }
+        .main-content::-webkit-scrollbar { width: 6px; }
+        .main-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+        .hero { margin-bottom: 60px; }
+        .hero span { color: var(--text-dim); font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        /* HIỆU ỨNG CHỮ ĐẸP (Gradient Text) */
+        .hero h1 { 
+            font-size: 56px; margin: 10px 0; font-weight: 800; letter-spacing: -2px;
+            background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p { color: var(--text-dim); font-size: 18px; line-height: 1.6; max-width: 600px; }
+
+        /* GRID BÀI HỌC */
+        .topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 25px; }
+
+        .topic-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px;
+            padding: 35px; text-decoration: none; color: inherit; position: relative;
+            display: flex; flex-direction: column; gap: 20px; overflow: hidden;
+        }
+
+        /* Hiệu ứng Glow khi hover */
+        .topic-card:hover {
+            border-color: rgba(162, 155, 254, 0.4);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(162, 155, 254, 0.1);
+        }
+
+        .card-head { display: flex; justify-content: space-between; align-items: flex-start; }
+        .card-number { font-size: 48px; font-weight: 800; opacity: 0.2; background: var(--primary-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card-icon-box { width: 50px; height: 50px; border-radius: 15px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--accent-purple); }
+
+        .card-content h3 { margin: 0; font-size: 22px; font-weight: 700; }
+        .card-content p { margin: 10px 0 0; color: var(--text-dim); font-size: 15px; line-height: 1.5; }
+
+        .card-footer { display: flex; justify-content: flex-end; }
+        .tag-id { font-size: 11px; font-weight: 800; padding: 6px 14px; border-radius: 20px; background: rgba(162, 155, 254, 0.1); color: var(--accent-purple); border: 1px solid rgba(162, 155, 254, 0.2); }
+
+        .hidden { display: none !important; }
+        @keyframes reveal { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .topic-card:not(.hidden) { animation: reveal 0.5s ease forwards; }
+    </style>
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <div class="logo"><i class="fas fa-atom"></i> MASTERGRAMMAR</div>
+        <a href="index.html" class="btn-back-home"><i class="fas fa-arrow-left"></i> QUAY LẠI TRANG CHỦ</a>
+    </div>
+
+    <div class="sidebar-scroll">
+        <div class="filter-group">
+            <span class="filter-label">Trình độ Telc</span>
+            <button class="filter-btn active" data-filter="all">Tất cả bài học <i class="fas fa-ellipsis-v"></i></button>
+            <button class="filter-btn" data-filter="a1">A1 - Start Deutsch <i class="fas fa-ellipsis-v"></i></button>
+            <button class="filter-btn" data-filter="a2">A2 - Deutschtest <i class="fas fa-ellipsis-v"></i></button>
+            <button class="filter-btn" data-filter="b1">B1 - Zertifikat B1 <i class="fas fa-ellipsis-v"></i></button>
+        </div>
+
+        <div class="filter-group">
+            <span class="filter-label">Chuyên đề câu</span>
+            <button class="filter-btn" data-filter="syntax">Cấu trúc câu <i class="fas fa-ellipsis-v"></i></button>
+            <button class="filter-btn" data-filter="declination">Biến cách <i class="fas fa-ellipsis-v"></i></button>
+            <button class="filter-btn" data-filter="verbs">Động từ & Thì <i class="fas fa-ellipsis-v"></i></button>
+        </div>
+    </div>
+</aside>
+
+<main class="main-content">
+    <div class="hero">
+        <span>TIO PRÊNTC CHỦ</span>
+        <h1>MASTERGRAMMAR</h1>
+        <p>Hệ thống ôn luyện ngữ pháp chuyên sâu dành cho các kỳ thi Telc với lộ trình được tối ưu hóa theo từng cấp độ.</p>
+    </div>
+
+    <div class="topic-grid">
+        <a href="lesson-1.html" class="topic-card" data-cat="a1">
+            <div class="card-head">
+                <div class="card-number">01</div>
+                <div class="card-icon-box"><i class="fas fa-terminal"></i></div>
+            </div>
+            <div class="card-content">
+                <h3>Vị trí động từ (Satzbau)</h3>
+                <p>Khám phá quy tắc vị trí thứ 2 của động từ, nền móng của mọi câu văn tiếng Đức chuẩn Telc.</p>
+            </div>
+            <div class="card-footer">
+                <span class="tag-id">TELC A1</span>
+            </div>
+        </a>
+
+        <a href="lesson-2.html" class="topic-card" data-cat="b1">
+            <div class="card-head">
+                <div class="card-number">01</div>
+                <div class="card-icon-box"><i class="fas fa-link"></i></div>
+            </div>
+            <div class="card-content">
+                <h3>Relativsatz (Mệnh đề quan hệ)</h3>
+                <p>Kết nối các câu đơn thành câu phức chuyên nghiệp bằng đại từ quan hệ Nominativ và Akkusativ.</p>
+            </div>
+            <div class="card-footer">
+                <span class="tag-id">TELC B1</span>
+            </div>
+        </a>
+
+        <a href="lesson-3.html" class="topic-card" data-cat="a2">
+            <div class="card-head">
+                <div class="card-number">01</div>
+                <div class="card-icon-box"><i class="fas fa-spell-check"></i></div>
+            </div>
+            <div class="card-content">
+                <h3>Biến cách Dativ chuyên sâu</h3>
+                <p>Cách sử dụng mạo từ và các giới từ luôn đi kèm với cách 3 trong đời sống và bài thi.</p>
+            </div>
+            <div class="card-footer">
+                <span class="tag-id">TELC A2</span>
+            </div>
+        </a>
+    </div>
+</main>
+
+<script>
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.topic-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Tắt hiệu ứng chọn ở toàn bộ mục khác (Logic yêu cầu)
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            const filterVal = this.getAttribute('data-filter');
+            cards.forEach(card => {
+                const cat = card.getAttribute('data-cat');
+                if (filterVal === 'all' || cat.includes(filterVal)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
