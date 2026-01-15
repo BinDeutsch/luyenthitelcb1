@@ -1,114 +1,148 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bin Deutsch - Luyện Thi Telc B1</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-	    <style>
+    <title>Bin Deutsch - Secure Access</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
         :root {
-            --bg: #050505;
-            --card: #111111;
-            --input: #1a1a1a;
-            --blue: #2563eb;
-            --green: #10b981;
-            --text: #ffffff;
-            --border: #222222;
+            --primary: #4f46e5;
+            --accent: #6366f1;
+            --bg: #0f172a;
+            --glass: rgba(30, 41, 59, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            background: radial-gradient(circle at top left, #1e1b4b, #0f172a);
+            color: white; min-height: 100vh; display: flex; align-items: center; justify-content: center;
         }
 
-        .app-container {
-            background-color: var(--card);
-            width: 950px; height: 580px;
-            border-radius: 20px; display: flex;
-            border: 1px solid var(--border); overflow: hidden;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+        .container {
+            width: 1000px; height: 600px; display: flex;
+            background: var(--glass); backdrop-filter: blur(20px);
+            border-radius: 24px; border: 1px solid var(--border); overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        .info-panel {
-            flex: 1; padding: 60px;
-            display: flex; flex-direction: column; justify-content: center;
+        /* Bên trái - Info */
+        .info-side {
+            flex: 1.2; padding: 60px; display: flex; flex-direction: column;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), transparent);
             border-right: 1px solid var(--border);
-            background: radial-gradient(circle at top left, #1a1a1a, #111111);
         }
 
-        .badge { color: var(--green); font-size: 13px; font-weight: 700; margin-bottom: 20px; }
-        .info-panel h1 { font-size: 38px; line-height: 1.1; margin-bottom: 20px; }
-        .info-panel p { color: #888; font-size: 16px; }
+        .brand { color: #6366f1; font-weight: 800; font-size: 22px; margin-bottom: 60px; display: flex; align-items: center; gap: 10px; }
+        .secure-tag { color: #10b981; font-size: 12px; font-weight: 700; letter-spacing: 1px; margin-bottom: 20px; text-transform: uppercase; }
+        .info-side h1 { font-size: 42px; font-weight: 700; line-height: 1.2; margin-bottom: 30px; }
+        
+        .features { list-style: none; }
+        .features li { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; color: #cbd5e1; font-size: 15px; }
+        .features li i { color: #6366f1; background: rgba(99, 102, 241, 0.1); padding: 8px; border-radius: 50%; font-size: 12px; }
 
-        .form-panel {
-            flex: 1; padding: 50px;
-            display: flex; flex-direction: column; justify-content: center;
-            background-color: #0c0c0c;
-        }
+        .footer-text { margin-top: auto; color: #64748b; font-size: 12px; }
 
+        /* Bên phải - Form */
+        .form-side { flex: 1; padding: 60px; display: flex; flex-direction: column; justify-content: center; position: relative; }
+        
         .hidden { display: none !important; }
+        h2 { font-size: 28px; margin-bottom: 10px; }
+        .sub-text { color: #94a3b8; font-size: 14px; margin-bottom: 35px; }
 
+        .input-group { position: relative; margin-bottom: 18px; }
+        .input-group i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #64748b; font-size: 18px; }
         input {
-            width: 100%; padding: 15px; margin-bottom: 15px;
-            background-color: var(--input); border: 1px solid var(--border);
-            border-radius: 12px; color: white; outline: none;
+            width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border);
+            padding: 16px 16px 16px 50px; border-radius: 14px; color: white; outline: none; transition: 0.3s;
         }
-        input:focus { border-color: var(--blue); }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
 
         .btn {
-            width: 100%; padding: 16px; border: none; border-radius: 12px;
-            font-weight: 700; cursor: pointer; transition: 0.3s;
+            width: 100%; padding: 16px; border-radius: 14px; border: none; font-weight: 600; font-size: 15px;
+            cursor: pointer; transition: 0.3s; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 10px;
         }
-        .btn-blue { background-color: var(--blue); color: white; }
-        .btn-green { background-color: var(--green); color: black; margin-top: 10px; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+        .btn-secondary { background: #10b981; color: #000; font-weight: 700; }
 
-        .qr-display { background: white; padding: 10px; border-radius: 16px; width: 160px; margin: 0 auto 15px; }
-        .qr-display img { width: 100%; display: block; }
-        .bill-box { background: #151515; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #222; font-size: 14px; }
-        .bill-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
-        .bill-row b { color: var(--green); }
+        .switch-link { text-align: center; margin-top: 25px; font-size: 14px; color: #94a3b8; }
+        .switch-link span { color: #6366f1; cursor: pointer; font-weight: 600; }
+
+        /* QR Section */
+        .qr-area { text-align: center; }
+        .qr-box { background: white; padding: 10px; border-radius: 15px; width: 150px; margin: 0 auto 20px; }
+        .qr-box img { width: 100%; display: block; }
+        .bill-info { background: rgba(0,0,0,0.2); border-radius: 12px; padding: 15px; margin-bottom: 20px; font-size: 13px; text-align: left; }
+        .bill-info div { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .bill-info b { color: #10b981; }
+
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <div class="info-panel">
-        <div id="left-badge" class="badge">⚡ ĐANG CHỜ ĐĂNG KÝ</div>
-        <h1>Luyện thi Telc B1<br> hiệu quả</h1>
-        <p>Hệ thống ôn luyện vận hành bởi Bin Deutsch.</p>
-        <p style="margin-top: 20px; font-size: 12px; color: #444;">© 2026 Bin Deutsch System</p>
+<div class="container">
+    <div class="info-side">
+        <div class="brand"><i class="fas fa-paper-plane"></i> BIN DEUTSCH</div>
+        <div class="secure-tag" id="status-badge">Secure Access</div>
+        <h1>Luyện thi Telc B1<br>thông minh.</h1>
+        <ul class="features">
+            <li><i class="fas fa-check"></i> AI phân tích lỗi sai bài đọc</li>
+            <li><i class="fas fa-check"></i> Kho đề thi cập nhật 2026</li>
+            <li><i class="fas fa-check"></i> Khóa học vĩnh viễn trên 1 máy</li>
+        </ul>
+        <div class="footer-text">© 2026 Hệ thống được phát triển bới Bin Deutsch.</div>
     </div>
 
-    <div class="form-panel">
-        <div id="ui-register">
-            <h2 style="margin-bottom: 30px; text-align: center;">Tạo tài khoản mới</h2>
-            <input type="text" id="u" placeholder="Tên đăng nhập">
-            <input type="password" id="p" placeholder="Mật khẩu">
-            <button class="btn btn-blue" onclick="actionRegister()">Đăng ký tài khoản</button>
+    <div class="form-side">
+        <div id="step-register">
+            <h2>Đăng ký mới</h2>
+            <p class="sub-text">Bắt đầu hành trình chinh phục Telc B1 ngay hôm nay.</p>
+            <div class="input-group">
+                <i class="far fa-user"></i>
+                <input type="text" id="reg-u" placeholder="Tên đăng nhập">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="reg-p" placeholder="Mật khẩu bảo mật">
+            </div>
+            <button class="btn btn-primary" onclick="goRegister()">Tiếp tục đăng ký →</button>
+            <p class="switch-link">Bạn đã có tài khoản? <span onclick="showUI('step-login')">Đăng nhập</span></p>
         </div>
 
-        <div id="ui-payment" class="hidden">
-            <p style="text-align: center; font-size: 13px; margin-bottom: 10px; color: #888;">Quét mã thanh toán 149.000đ</p>
-            <div class="qr-display">
-                <img id="qr-code" src="" alt="QR">
+        <div id="step-pay" class="hidden qr-area">
+            <h2>Kích hoạt khóa học</h2>
+            <p class="sub-text">Quét mã để nhận Key kích hoạt tự động.</p>
+            <div class="qr-box">
+                <img id="qr-img" src="" alt="QR">
             </div>
-            <div class="bill-box">
-                <div class="bill-row"><span>Số tiền:</span> <b>149.000đ</b></div>
-                <div class="bill-row"><span>Nội dung:</span> <b id="pay-msg"></b></div>
+            <div class="bill-info">
+                <div><span>Số tiền:</span> <b>149.000đ</b></div>
+                <div><span>Nội dung:</span> <b id="pay-content"></b></div>
             </div>
-            <input type="text" id="key-code" placeholder="Nhập mã kích hoạt...">
-            <button class="btn btn-green" onclick="actionActivate()">Kích hoạt ngay</button>
+            <div class="input-group">
+                <i class="fas fa-key"></i>
+                <input type="text" id="key-input" placeholder="Nhập mã kích hoạt của bạn">
+            </div>
+            <button class="btn btn-secondary" onclick="goActivate()">Kích hoạt ngay</button>
         </div>
 
-        <div id="ui-login" class="hidden">
-            <h2 style="margin-bottom: 30px; text-align: center;">Đăng nhập</h2>
-            <input type="text" id="log-u" placeholder="Tên đăng nhập">
-            <input type="password" id="log-p" placeholder="Mật khẩu">
-            <button class="btn btn-blue" onclick="actionLogin()">Vào học ngay</button>
+        <div id="step-login" class="hidden">
+            <h2>Chào bạn quay lại</h2>
+            <p class="sub-text">Đăng nhập để tiếp tục việc học của bạn.</p>
+            <div class="input-group">
+                <i class="far fa-user"></i>
+                <input type="text" id="log-u" placeholder="Tên đăng nhập">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="log-p" placeholder="Mật khẩu">
+            </div>
+            <button class="btn btn-primary" onclick="goLogin()">Đăng nhập ngay</button>
+            <p class="switch-link">Chưa có tài khoản? <span onclick="showUI('step-register')">Đăng ký mới</span></p>
         </div>
     </div>
 </div>
@@ -117,116 +151,83 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
 <script>
-    // 1. Cấu hình Firebase
-    // 1. Cấu hình Firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyBUPyMLemOPc2PxcUEL7idiWexFZvVVsjs",
-    authDomain: "telc-b1-ai.firebaseapp.com",
-    projectId: "telc-b1-ai",
-    storageBucket: "telc-b1-ai.firebasestorage.app",
-    messagingSenderId: "992197424488",
-    appId: "1:992197424488:web:d02815a8c95ee27ae0d2dd"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+    const firebaseConfig = {
+        apiKey: "AIzaSyBUPyMLemOPc2PxcUEL7idiWexFZvVVsjs",
+        authDomain: "telc-b1-ai.firebaseapp.com",
+        projectId: "telc-b1-ai",
+        storageBucket: "telc-b1-ai.firebasestorage.app",
+        messagingSenderId: "992197424488",
+        appId: "1:992197424488:web:d02815a8c95ee27ae0d2dd"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const COLLECTION = "member"; // Tên collection trên Firebase của bạn
 
-// QUAN TRỌNG: Kiểm tra lại tên này trên Firebase của bạn (users hay member?)
-const COLLECTION_NAME = "member"; 
-
-function switchUI(id) {
-    document.getElementById('ui-register').classList.add('hidden');
-    document.getElementById('ui-payment').classList.add('hidden');
-    document.getElementById('ui-login').classList.add('hidden');
-    document.getElementById(id).classList.remove('hidden');
-}
-
-// --- HÀM ĐĂNG KÝ ---
-function actionRegister() {
-    const user = document.getElementById('u').value.trim();
-    const pass = document.getElementById('p').value.trim();
-
-    if (!user || !pass) return alert("Vui lòng nhập đủ thông tin!");
-
-    sessionStorage.setItem('temp_u', user);
-    sessionStorage.setItem('temp_p', pass);
-
-    const content = "BIN" + user.toUpperCase();
-    document.getElementById('pay-msg').innerText = content;
-    document.getElementById('qr-code').src = `https://img.vietqr.io/image/MB-0348307488-compact2.png?amount=149000&addInfo=${encodeURIComponent(content)}`;
-
-    switchUI('ui-payment');
-    document.getElementById('left-badge').innerText = "⚡ ĐĂNG KÝ THÀNH CÔNG";
-}
-
-// --- HÀM KÍCH HOẠT ---
-async function actionActivate() {
-    const keyInput = document.getElementById('key-code').value.trim();
-    const user = sessionStorage.getItem('temp_u');
-    const pass = sessionStorage.getItem('temp_p');
-
-    if (!user) return alert("Lỗi: Vui lòng đăng ký lại!");
-    if (!keyInput) return alert("Hãy nhập mã Key!");
-
-    try {
-        const snap = await db.collection(COLLECTION_NAME).where('memberCode', '==', keyInput).where('isUsed', '==', false).get();
-
-        if (snap.empty) return alert("Key sai hoặc đã bị dùng!");
-
-        const devId = 'ID-' + Math.random().toString(36).substr(2, 9);
-        await db.collection(COLLECTION_NAME).doc(snap.docs[0].id).update({
-            username: user,
-            password: pass,
-            deviceId: devId,
-            isUsed: true
-        });
-
-        localStorage.setItem('my_dev_id', devId);
-        alert("🎉 Kích hoạt thành công!");
-        switchUI('ui-login');
-    } catch (e) { alert("Lỗi Firebase: " + e.message); }
-}
-
-// --- HÀM ĐĂNG NHẬP (ĐÃ FIX LỖI SAI THÔNG TIN) ---
-async function actionLogin() {
-    const u = document.getElementById('log-u').value.trim();
-    const p = document.getElementById('log-p').value.trim();
-    const myDev = localStorage.getItem('my_dev_id');
-
-    try {
-        const snap = await db.collection(COLLECTION_NAME)
-            .where('username', '==', u)
-            .where('password', '==', p)
-            .get();
-
-        if (!snap.empty) {
-            const userData = snap.docs[0].data();
-            if (userData.deviceId === myDev) {
-                // QUAN TRỌNG: Lưu trạng thái đăng nhập vào máy
-                localStorage.setItem('user_session', 'active'); 
-                alert("🎉 Đăng nhập thành công!");
-                window.location.replace("index.html"); // Dùng replace để không quay lại được trang login bằng nút Back
-            } else {
-                alert("❌ Thiết bị này không được phép!");
-            }
-        } else {
-            alert("❌ Sai tài khoản hoặc mật khẩu!");
-        }
-    } catch (e) { alert("Lỗi: " + e.message); }
-}
-
-window.onload = () => {
-    const myDev = localStorage.getItem('my_dev_id');
-    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
-
-    // Nếu đã kích hoạt máy VÀ chưa đăng nhập thành công thì mới hiện Login
-    if (myDev && !isLoggedIn) {
-        switchUI('ui-login');
-    } 
-    // Nếu đã đăng nhập rồi mà vẫn ở trang login.html thì chuyển sang index.html luôn
-    else if (myDev && isLoggedIn && window.location.pathname.includes('login.html')) {
-        window.location.href = "index.html";
+    function showUI(id) {
+        document.getElementById('step-register').classList.add('hidden');
+        document.getElementById('step-pay').classList.add('hidden');
+        document.getElementById('step-login').classList.add('hidden');
+        document.getElementById(id).classList.remove('hidden');
     }
-};
+
+    // Xử lý Đăng ký
+    function goRegister() {
+        const u = document.getElementById('reg-u').value.trim();
+        const p = document.getElementById('reg-p').value.trim();
+        if(!u || !p) return alert("Vui lòng nhập đủ thông tin!");
+
+        sessionStorage.setItem('temp_u', u);
+        sessionStorage.setItem('temp_p', p);
+
+        const content = "BIN" + u.toUpperCase();
+        document.getElementById('pay-content').innerText = content;
+        document.getElementById('qr-img').src = `https://img.vietqr.io/image/MB-0348307488-compact2.png?amount=149000&addInfo=${content}`;
+
+        showUI('step-pay');
+        document.getElementById('status-badge').innerText = "⚡ Đang chờ kích hoạt";
+        document.getElementById('status-badge').style.color = "#f59e0b";
+    }
+
+    // Xử lý Kích hoạt
+    async function goActivate() {
+        const key = document.getElementById('key-input').value.trim();
+        const u = sessionStorage.getItem('temp_u');
+        const p = sessionStorage.getItem('temp_p');
+
+        if(!key) return alert("Nhập mã kích hoạt!");
+
+        try {
+            const snap = await db.collection(COLLECTION).where('memberCode', '==', key).where('isUsed', '==', false).get();
+            if(snap.empty) return alert("Mã không đúng hoặc đã bị dùng!");
+
+            const devId = 'ID-' + Math.random().toString(36).substr(2, 9);
+            await db.collection(COLLECTION).doc(snap.docs[0].id).update({
+                username: u, password: p, deviceId: devId, isUsed: true
+            });
+
+            localStorage.setItem('my_dev_id', devId);
+            alert("Kích hoạt thành công!");
+            showUI('step-login');
+        } catch (e) { alert("Lỗi hệ thống!"); }
+    }
+
+    // Xử lý Đăng nhập
+    async function goLogin() {
+        const u = document.getElementById('log-u').value.trim();
+        const p = document.getElementById('log-p').value.trim();
+        const myDev = localStorage.getItem('my_dev_id');
+
+        try {
+            const snap = await db.collection(COLLECTION).where('username', '==', u).where('password', '==', p).get();
+            if(!snap.empty) {
+                if(snap.docs[0].data().deviceId === myDev) {
+                    window.location.href = "index.html";
+                } else { alert("Tài khoản này thuộc về thiết bị khác!"); }
+            } else { alert("Sai tài khoản hoặc mật khẩu!"); }
+        } catch (e) { alert("Lỗi kết nối!"); }
+    }
+
+    window.onload = () => { if(localStorage.getItem('my_dev_id')) showUI('step-login'); };
 </script>
 </body>
 </html>
